@@ -5,7 +5,7 @@ const RecyclableProductsList = () => {
     const navigate = useNavigate();
     const [searchKeyword, setSearchKeyword] = useState("");
     const [selectedFilter, setSelectedFilter] = useState("전체");
-    const [selectedSort, setSelectedSort] = useState("최신순");
+    const [selectedCategory, setSelectedCategory] = useState("종이");
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
@@ -27,6 +27,8 @@ const RecyclableProductsList = () => {
     const filteredProducts = products.filter(
         (product) =>
             (selectedFilter === "전체" || product.status === selectedFilter) &&
+            (selectedCategory === "전체" ||
+                product.category === selectedCategory) &&
             (product.title.includes(searchKeyword) ||
                 product.company.includes(searchKeyword) ||
                 product.category.includes(searchKeyword))
@@ -142,22 +144,6 @@ const RecyclableProductsList = () => {
             margin: "16px 16px 0 16px",
             boxShadow: "0 4px 12px rgba(0, 0, 0, 0.08)",
         },
-        toggleButtons: {
-            display: "flex",
-            border: "1px solid #e0e6ed",
-            borderRadius: "12px",
-            overflow: "hidden",
-            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.03)",
-        },
-        toggleButton: {
-            flex: 1,
-            padding: "12px 0",
-            border: "none",
-            backgroundColor: "#fff",
-            fontSize: "14px",
-            cursor: "pointer",
-            fontWeight: 500,
-        },
         productsList: {
             padding: "0 16px",
             marginTop: "16px",
@@ -272,6 +258,24 @@ const RecyclableProductsList = () => {
             alignItems: "center",
             justifyContent: "center",
         },
+        categoryButtonGroup: {
+            display: "flex",
+            gap: "8px",
+            marginBottom: "8px",
+            flexWrap: "wrap",
+            justifyContent: "center",
+        },
+        categoryButton: {
+            flex: "1 1 120px",
+            padding: "12px 0",
+            border: "1px solid #e0e6ed",
+            backgroundColor: "#fff",
+            borderRadius: "12px",
+            fontSize: "14px",
+            cursor: "pointer",
+            transition: "all 0.2s ease",
+            fontWeight: 500,
+        },
     };
 
     return (
@@ -368,48 +372,109 @@ const RecyclableProductsList = () => {
                 </div>
             </div>
 
-            {/* 정렬 옵션 */}
+            {/* 카테고리 옵션 */}
             <div style={styles.sortContainer}>
                 <h3 style={styles.sectionHeader}>
                     <span style={styles.sectionIcon}>⏱️</span>
-                    정렬
+                    카테고리
                 </h3>
-                <div style={styles.toggleButtons}>
+                <div style={styles.categoryButtonGroup}>
                     <button
                         type="button"
                         style={{
-                            ...styles.toggleButton,
-                            ...(selectedSort === "최신순"
+                            ...styles.categoryButton,
+                            ...(selectedCategory === "전체"
                                 ? styles.selectedButton
-                                : {}),
+                                : {
+                                      border: "1px solid #ddd",
+                                      backgroundColor: "#fff",
+                                      color: "#333",
+                                  }),
                         }}
-                        onClick={() => setSelectedSort("최신순")}
+                        onClick={() => setSelectedCategory("전체")}
                     >
-                        최신순
+                        전체
+                    </button>
+
+                    <button
+                        type="button"
+                        style={{
+                            ...styles.categoryButton,
+                            ...(selectedCategory === "플라스틱"
+                                ? styles.selectedButton
+                                : {
+                                      border: "1px solid #ddd",
+                                      backgroundColor: "#fff",
+                                      color: "#333",
+                                  }),
+                        }}
+                        onClick={() => setSelectedCategory("플라스틱")}
+                    >
+                        플라스틱
                     </button>
                     <button
                         type="button"
                         style={{
-                            ...styles.toggleButton,
-                            ...(selectedSort === "무게순"
+                            ...styles.categoryButton,
+                            ...(selectedCategory === "의류"
                                 ? styles.selectedButton
-                                : {}),
+                                : {
+                                      border: "1px solid #ddd",
+                                      backgroundColor: "#fff",
+                                      color: "#333",
+                                  }),
                         }}
-                        onClick={() => setSelectedSort("무게순")}
+                        onClick={() => setSelectedCategory("의류")}
                     >
-                        무게순
+                        의류
                     </button>
                     <button
                         type="button"
                         style={{
-                            ...styles.toggleButton,
-                            ...(selectedSort === "상태순"
+                            ...styles.categoryButton,
+                            ...(selectedCategory === "종이"
                                 ? styles.selectedButton
-                                : {}),
+                                : {
+                                      border: "1px solid #ddd",
+                                      backgroundColor: "#fff",
+                                      color: "#333",
+                                  }),
                         }}
-                        onClick={() => setSelectedSort("상태순")}
+                        onClick={() => setSelectedCategory("종이")}
                     >
-                        상태순
+                        종이
+                    </button>
+                    <button
+                        type="button"
+                        style={{
+                            ...styles.categoryButton,
+                            ...(selectedCategory === "금속"
+                                ? styles.selectedButton
+                                : {
+                                      border: "1px solid #ddd",
+                                      backgroundColor: "#fff",
+                                      color: "#333",
+                                  }),
+                        }}
+                        onClick={() => setSelectedCategory("금속")}
+                    >
+                        금속
+                    </button>
+                    <button
+                        type="button"
+                        style={{
+                            ...styles.categoryButton,
+                            ...(selectedCategory === "기타"
+                                ? styles.selectedButton
+                                : {
+                                      border: "1px solid #ddd",
+                                      backgroundColor: "#fff",
+                                      color: "#333",
+                                  }),
+                        }}
+                        onClick={() => setSelectedCategory("기타")}
+                    >
+                        기타
                     </button>
                 </div>
             </div>

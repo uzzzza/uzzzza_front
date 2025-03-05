@@ -10,7 +10,7 @@ const ProductUploadForm = () => {
     const fileInputRef = useRef(null);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [selectedCategory, setSelectedCategory] = useState("중고");
+    const [selectedCategory, setSelectedCategory] = useState("종이");
     const [selectedCondition, setSelectedCondition] = useState("A");
     const [weight, setWeight] = useState("");
     const [cleaningStatus, setCleaningStatus] = useState("세척 완료");
@@ -374,22 +374,6 @@ const ProductUploadForm = () => {
                             type="button"
                             style={{
                                 ...styles.button,
-                                ...(selectedCategory === "종이"
-                                    ? styles.selectedButton
-                                    : {
-                                          border: "1px solid #ddd",
-                                          backgroundColor: "#fff",
-                                          color: "#333",
-                                      }),
-                            }}
-                            onClick={() => setSelectedCategory("종이")}
-                        >
-                            종이
-                        </button>
-                        <button
-                            type="button"
-                            style={{
-                                ...styles.button,
                                 ...(selectedCategory === "플라스틱"
                                     ? styles.selectedButton
                                     : {
@@ -406,6 +390,38 @@ const ProductUploadForm = () => {
                             type="button"
                             style={{
                                 ...styles.button,
+                                ...(selectedCategory === "의류"
+                                    ? styles.selectedButton
+                                    : {
+                                          border: "1px solid #ddd",
+                                          backgroundColor: "#fff",
+                                          color: "#333",
+                                      }),
+                            }}
+                            onClick={() => setSelectedCategory("의류")}
+                        >
+                            의류
+                        </button>
+                        <button
+                            type="button"
+                            style={{
+                                ...styles.button,
+                                ...(selectedCategory === "종이"
+                                    ? styles.selectedButton
+                                    : {
+                                          border: "1px solid #ddd",
+                                          backgroundColor: "#fff",
+                                          color: "#333",
+                                      }),
+                            }}
+                            onClick={() => setSelectedCategory("종이")}
+                        >
+                            종이
+                        </button>
+                        <button
+                            type="button"
+                            style={{
+                                ...styles.button,
                                 ...(selectedCategory === "금속"
                                     ? styles.selectedButton
                                     : {
@@ -417,38 +433,6 @@ const ProductUploadForm = () => {
                             onClick={() => setSelectedCategory("금속")}
                         >
                             금속
-                        </button>
-                        <button
-                            type="button"
-                            style={{
-                                ...styles.button,
-                                ...(selectedCategory === "유리"
-                                    ? styles.selectedButton
-                                    : {
-                                          border: "1px solid #ddd",
-                                          backgroundColor: "#fff",
-                                          color: "#333",
-                                      }),
-                            }}
-                            onClick={() => setSelectedCategory("유리")}
-                        >
-                            유리
-                        </button>
-                        <button
-                            type="button"
-                            style={{
-                                ...styles.button,
-                                ...(selectedCategory === "전자제품"
-                                    ? styles.selectedButton
-                                    : {
-                                          border: "1px solid #ddd",
-                                          backgroundColor: "#fff",
-                                          color: "#333",
-                                      }),
-                            }}
-                            onClick={() => setSelectedCategory("전자제품")}
-                        >
-                            전자제품
                         </button>
                         <button
                             type="button"
