@@ -170,9 +170,10 @@ const ProductUploadForm = () => {
             gap: "8px",
             marginBottom: "8px",
             flexWrap: "wrap",
+            justifyContent: "center",
         },
         button: {
-            flex: 1,
+            flex: "1 1 120px",
             padding: "12px 0",
             border: "1px solid #e0e6ed",
             backgroundColor: "#fff",
