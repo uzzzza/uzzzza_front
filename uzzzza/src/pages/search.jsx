@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const RecyclableProductsList = () => {
@@ -6,6 +6,14 @@ const RecyclableProductsList = () => {
     const [searchKeyword, setSearchKeyword] = useState("");
     const [selectedFilter, setSelectedFilter] = useState("전체");
     const [selectedSort, setSelectedSort] = useState("최신순");
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        fetch("/data/products.json") // JSON 파일 경로
+            .then((response) => response.json())
+            .then((data) => setProducts(data))
+            .catch((error) => console.error("Error fetching products:", error));
+    }, []);
 
     const handleProductClick = (productId) => {
         navigate(`/product/${productId}`);
@@ -14,54 +22,6 @@ const RecyclableProductsList = () => {
     const handleAddButtonClick = () => {
         navigate("/upload");
     };
-
-    // 샘플 데이터
-    const products = [
-        {
-            id: 1,
-            title: "재활용 플라스틱 병 100개",
-            company: "친환경주식회사",
-            category: "플라스틱",
-            condition: "A",
-            quantity: "10kg",
-            date: "2024-03-04",
-            image: "/api/placeholder/80/80",
-            status: "수거대기",
-        },
-        {
-            id: 2,
-            title: "헌 의류 - 티셔츠, 청바지 등",
-            company: "그린리사이클",
-            category: "섬유",
-            condition: "B",
-            quantity: "5kg",
-            date: "2024-03-03",
-            image: "/api/placeholder/80/80",
-            status: "수거완료",
-        },
-        {
-            id: 3,
-            title: "폐지 및 종이류",
-            company: "에코솔루션",
-            category: "종이",
-            condition: "A",
-            quantity: "15kg",
-            date: "2024-03-02",
-            image: "/api/placeholder/80/80",
-            status: "수거대기",
-        },
-        {
-            id: 4,
-            title: "알루미늄 캔 200개",
-            company: "메탈리사이클",
-            category: "금속",
-            condition: "A",
-            quantity: "4kg",
-            date: "2024-03-01",
-            image: "/api/placeholder/80/80",
-            status: "진행중",
-        },
-    ];
 
     // 필터링된 제품 목록
     const filteredProducts = products.filter(

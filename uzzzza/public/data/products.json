@@ -1,0 +1,94 @@
+[
+    {
+        "id": 1,
+        "title": "재활용 플라스틱 병 100개",
+        "description": "깨끗하게 세척된 음료 플라스틱 병 100개입니다. 라벨은 제거되었으며, 뚜껑도 포함되어 있습니다.",
+        "company": "친환경주식회사",
+        "contact": "010-5031-8728",
+        "manager": "김환경",
+        "address": "서울시 강남구 에코로 123",
+        "category": "플라스틱",
+        "condition": "A",
+        "quantity": "10kg",
+        "date": "2024-03-04",
+        "pickupPeriod": {
+            "startDate": "2024-03-10",
+            "endDate": "2024-03-20"
+        },
+        "cleaningStatus": "세척 완료",
+        "includePackaging": "포함",
+        "visitPickup": "가능",
+        "delivery": "가능",
+        "status": "수거대기",
+        "image": "/api/placeholder/80/80"
+    },
+    {
+        "id": 2,
+        "title": "헌 의류 - 티셔츠, 청바지 등",
+        "description": "중고 의류로 깨끗하게 세탁 후 정리된 상태입니다.",
+        "company": "그린리사이클",
+        "contact": "010-5022-5678",
+        "manager": "박지수",
+        "address": "서울시 성동구 재활용로 45",
+        "category": "섬유",
+        "condition": "B",
+        "quantity": "5kg",
+        "date": "2024-03-03",
+        "pickupPeriod": {
+            "startDate": "2024-03-12",
+            "endDate": "2024-03-22"
+        },
+        "cleaningStatus": "세탁 완료",
+        "includePackaging": "미포함",
+        "visitPickup": "가능",
+        "delivery": "불가능",
+        "status": "수거완료",
+        "image": "/api/placeholder/80/80"
+    },
+    {
+        "id": 3,
+        "title": "폐지 및 종이류",
+        "description": "신문지, 박스, 책자 등 깨끗한 종이류로 구성되어 있습니다.",
+        "company": "에코솔루션",
+        "contact": "010-7894-1234",
+        "manager": "이환경",
+        "address": "부산시 해운대구 녹색로 88",
+        "category": "종이",
+        "condition": "A",
+        "quantity": "15kg",
+        "date": "2024-03-02",
+        "pickupPeriod": {
+            "startDate": "2024-03-15",
+            "endDate": "2024-03-25"
+        },
+        "cleaningStatus": "분류 완료",
+        "includePackaging": "포함",
+        "visitPickup": "불가능",
+        "delivery": "가능",
+        "status": "수거대기",
+        "image": "/api/placeholder/80/80"
+    },
+    {
+        "id": 4,
+        "title": "알루미늄 캔 200개",
+        "description": "음료 캔 200개로 변형되지 않은 깨끗한 상태입니다.",
+        "company": "메탈리사이클",
+        "contact": "010-6789-5678",
+        "manager": "최금속",
+        "address": "대전시 유성구 금속로 101",
+        "category": "금속",
+        "condition": "A",
+        "quantity": "4kg",
+        "date": "2024-03-01",
+        "pickupPeriod": {
+            "startDate": "2024-03-05",
+            "endDate": "2024-03-15"
+        },
+        "cleaningStatus": "세척 완료",
+        "includePackaging": "포함",
+        "visitPickup": "가능",
+        "delivery": "가능",
+        "status": "진행중",
+        "image": "/api/placeholder/80/80"
+    }
+]

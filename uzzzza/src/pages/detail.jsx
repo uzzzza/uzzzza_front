@@ -1,42 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 const RecyclableProductDetail = ({ images = [] }) => {
     const { id } = useParams(); // URL에서 상품 ID 가져오기
     const navigate = useNavigate(); // 뒤로가기를 위한 네비게이션
+    const [product, setProduct] = useState(null);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    useEffect(() => {
+        fetch("/data/products.json") // JSON 파일 경로
+            .then((response) => response.json())
+            .then((data) => {
+                const foundProduct = data.find(
+                    (item) => item.id === parseInt(id, 10)
+                );
+                setProduct(foundProduct || null);
+            })
+            .catch((error) => console.error("Error fetching product:", error));
+    }, [id]);
+
+    if (!product) {
+        return <p>상품을 찾을 수 없습니다.</p>;
+    }
 
     // 추가: 뒤로가기 핸들러
     const handleBackClick = () => {
         navigate(-1); // 브라우저 히스토리에서 뒤로가기
     };
-
-    // 상품 상세 정보 (실제 구현에서는 API에서 받아올 것)
-    const product = {
-        id: 1,
-        title: "재활용 플라스틱 병 100개",
-        description:
-            "깨끗하게 세척된 음료 플라스틱 병 100개입니다. 라벨은 제거되었으며, 뚜껑도 포함되어 있습니다.",
-        company: "친환경주식회사",
-        contact: "010-5031-8728",
-        manager: "김환경",
-        address: "서울시 강남구 에코로 123",
-        category: "플라스틱",
-        condition: "A",
-        quantity: "10kg",
-        date: "2024-03-04",
-        pickupPeriod: {
-            startDate: "2024-03-10",
-            endDate: "2024-03-20",
-        },
-        cleaningStatus: "세척 완료",
-        includePackaging: "포함",
-        visitPickup: "가능",
-        delivery: "가능",
-        status: "수거대기",
-    };
-
-    // 이미지 갤러리를 위한 상태
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     // 이미지가 있는지 확인
     const hasImages = images && images.length > 0;
