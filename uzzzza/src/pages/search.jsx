@@ -1,9 +1,21 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const RecyclableProductsList = () => {
-  const [searchKeyword, setSearchKeyword] = useState('');
-  const [selectedFilter, setSelectedFilter] = useState('전체');
-  const [selectedSort, setSelectedSort] = useState('최신순');
+    const navigate = useNavigate(); // 추가: navigate 가져오기
+    const [searchKeyword, setSearchKeyword] = useState('');
+    const [selectedFilter, setSelectedFilter] = useState('전체');
+    const [selectedSort, setSelectedSort] = useState('최신순');
+    
+    // 추가: 제품 클릭 핸들러 함수
+    const handleProductClick = (productId) => {
+      navigate(`/product/${productId}`); // detail 페이지로 이동
+    };
+    
+    // 추가: 플로팅 버튼 클릭 핸들러 함수
+    const handleAddButtonClick = () => {
+      navigate('/upload'); // upload 페이지로 이동
+    };
   
   // 샘플 데이터
   const products = [
@@ -254,7 +266,6 @@ const RecyclableProductsList = () => {
   return (
     <div style={styles.container}>
       <div style={styles.formHeader}>
-        <button style={styles.backButton}>←</button>
         <h2 style={styles.headerTitle}>재활용품 조회</h2>
       </div>
       
@@ -358,7 +369,7 @@ const RecyclableProductsList = () => {
       <div style={styles.productsList}>
         {filteredProducts.length > 0 ? (
           filteredProducts.map(product => (
-            <div key={product.id} style={styles.productCard}>
+            <div key={product.id} style={styles.productCard} onClick={() => handleProductClick(product.id)}>
               <div style={styles.productImage}>
                 <img src={product.image} alt={product.title} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
               </div>
@@ -402,7 +413,7 @@ const RecyclableProductsList = () => {
       
       {/* 하단 플로팅 버튼 */}
       <div style={styles.floatingButtonContainer}>
-        <button style={styles.addButton}>+</button>
+        <button style={styles.addButton} onClick={handleAddButtonClick}>+</button>
       </div>
     </div>
   );

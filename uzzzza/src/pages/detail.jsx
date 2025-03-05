@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const RecyclableProductDetail = () => {
+    const { id } = useParams(); // URL에서 상품 ID 가져오기
+    const navigate = useNavigate(); // 뒤로가기를 위한 네비게이션
+  
+  // 추가: 뒤로가기 핸들러
+    const handleBackClick = () => {
+        navigate(-1); // 브라우저 히스토리에서 뒤로가기
+    };
   // 상품 상세 정보 (실제 구현에서는 API에서 받아올 것)
   const product = {
     id: 1,
@@ -198,7 +206,7 @@ const RecyclableProductDetail = () => {
   return (
     <div style={styles.container}>
       <div style={styles.formHeader}>
-        <button style={styles.backButton}>←</button>
+        <button style={styles.backButton} onClick={handleBackClick}>←</button>
         <h2 style={styles.headerTitle}>재활용품 상세</h2>
       </div>
       

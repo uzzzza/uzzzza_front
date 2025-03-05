@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const ProductUploadForm = () => {
+    const navigate = useNavigate(); // 네비게이션 훅 추가
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('중고');
@@ -10,6 +12,17 @@ const ProductUploadForm = () => {
   const [includePackaging, setIncludePackaging] = useState('포함');
   const [isVisitPickup, setIsVisitPickup] = useState(true);
   const [isDeliveryPossible, setIsDeliveryPossible] = useState(true);
+  const handleBackClick = () => {
+    navigate('/'); // 메인 페이지로 이동
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    // 여기에 데이터 저장 로직이 들어갈 수 있음
+    
+    // 저장 후 메인 페이지로 이동
+    navigate('/');
+  };
   
   const formStyles = {
     container: {
@@ -205,11 +218,11 @@ const ProductUploadForm = () => {
   return (
     <div style={formStyles.container}>
       <div style={formStyles.formHeader}>
-        <button style={formStyles.backButton}>←</button>
+        <button style={formStyles.backButton} onClick={handleBackClick}>←</button>
         <h2 style={formStyles.headerTitle}>제품등록 업로드</h2>
       </div>
       
-      <form style={formStyles.form}>
+      <form style={formStyles.form} onSubmit={handleSubmit}>
         {/* Product Title */}
         <div style={formStyles.formGroup}>
           <label style={formStyles.label}>
