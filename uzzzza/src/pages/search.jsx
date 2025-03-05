@@ -2,19 +2,17 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const RecyclableProductsList = () => {
-    const navigate = useNavigate(); // 추가: navigate 가져오기
+    const navigate = useNavigate();
     const [searchKeyword, setSearchKeyword] = useState('');
     const [selectedFilter, setSelectedFilter] = useState('전체');
     const [selectedSort, setSelectedSort] = useState('최신순');
     
-    // 추가: 제품 클릭 핸들러 함수
     const handleProductClick = (productId) => {
-      navigate(`/product/${productId}`); // detail 페이지로 이동
+      navigate(`/product/${productId}`);
     };
     
-    // 추가: 플로팅 버튼 클릭 핸들러 함수
     const handleAddButtonClick = () => {
-      navigate('/upload'); // upload 페이지로 이동
+      navigate('/upload');
     };
   
   // 샘플 데이터
@@ -73,66 +71,83 @@ const RecyclableProductsList = () => {
      product.category.includes(searchKeyword))
   );
   
+  // 스타일: detail.jsx와 동일한 스타일 적용
   const styles = {
     container: {
       maxWidth: '480px',
       margin: '0 auto',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
-      backgroundColor: '#f5f5f5',
+      backgroundColor: '#f7f9fc',
       color: '#333',
-      paddingBottom: '80px', // 플로팅 버튼 공간 확보
+      paddingBottom: '80px',
       minHeight: '100vh',
     },
     formHeader: {
       display: 'flex',
       alignItems: 'center',
-      padding: '15px',
+      padding: '18px 15px',
       backgroundColor: '#fff',
       position: 'sticky',
       top: 0,
       zIndex: 10,
-      borderBottom: '1px solid #eee'
-    },
-    backButton: {
-      background: 'none',
-      border: 'none',
-      fontSize: '18px',
-      marginRight: '10px',
-      cursor: 'pointer'
+      borderBottom: '1px solid #f0f0f0',
+      boxShadow: '0 2px 10px rgba(0, 0, 0, 0.05)'
     },
     headerTitle: {
       fontSize: '18px',
       margin: 0,
-      fontWeight: 500
+      fontWeight: 600
     },
     searchContainer: {
       padding: '15px',
     },
     searchInputContainer: {
       position: 'relative',
+      backgroundColor: '#fff',
+      borderRadius: '16px',
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
     },
     searchInput: {
       width: '100%',
-      padding: '12px',
+      padding: '16px',
       paddingRight: '40px',
-      border: '1px solid #ddd',
-      borderRadius: '4px',
+      border: '1px solid #e0e6ed',
+      borderRadius: '16px',
       fontSize: '14px',
       boxSizing: 'border-box',
+      boxShadow: '0 2px 5px rgba(0, 0, 0, 0.03)'
     },
     searchButton: {
       position: 'absolute',
-      right: '10px',
+      right: '16px',
       top: '50%',
       transform: 'translateY(-50%)',
       background: 'none',
       border: 'none',
       fontSize: '18px',
       cursor: 'pointer',
+      color: '#4cd686'
     },
     filterContainer: {
-      padding: '0 15px',
-      marginBottom: '15px',
+      backgroundColor: '#fff',
+      padding: '20px',
+      marginTop: '8px',
+      borderRadius: '16px',
+      margin: '16px',
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
+    },
+    sectionHeader: {
+      fontSize: '17px',
+      fontWeight: 600,
+      margin: '0 0 16px',
+      color: '#2c3e50',
+      display: 'flex',
+      alignItems: 'center'
+    },
+    sectionIcon: {
+      marginRight: '8px',
+      fontSize: '20px',
+      color: '#4cd686'
     },
     buttonGroup: {
       display: 'flex',
@@ -142,80 +157,106 @@ const RecyclableProductsList = () => {
     },
     button: {
       flex: 1,
-      padding: '10px 0',
-      border: '1px solid #ddd',
+      padding: '12px 0',
+      border: '1px solid #e0e6ed',
       backgroundColor: '#fff',
-      borderRadius: '4px',
+      borderRadius: '12px',
       fontSize: '14px',
       cursor: 'pointer',
       transition: 'all 0.2s ease',
+      fontWeight: 500
     },
     selectedButton: {
-      backgroundColor: '#00c471',
+      backgroundColor: '#4cd686',
       color: 'white',
-      borderColor: '#00c471',
+      borderColor: '#4cd686',
+      boxShadow: '0 4px 10px rgba(76, 214, 134, 0.3)'
     },
     sortContainer: {
-      padding: '0 15px',
-      marginBottom: '15px',
+      backgroundColor: '#fff',
+      padding: '20px',
+      marginTop: '8px',
+      borderRadius: '16px',
+      margin: '16px 16px 0 16px',
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
     },
     toggleButtons: {
       display: 'flex',
-      border: '1px solid #ddd',
-      borderRadius: '4px',
+      border: '1px solid #e0e6ed',
+      borderRadius: '12px',
       overflow: 'hidden',
+      boxShadow: '0 2px 5px rgba(0, 0, 0, 0.03)'
     },
     toggleButton: {
       flex: 1,
-      padding: '10px 0',
+      padding: '12px 0',
       border: 'none',
       backgroundColor: '#fff',
       fontSize: '14px',
       cursor: 'pointer',
+      fontWeight: 500
     },
     productsList: {
-      padding: '0 15px',
+      padding: '0 16px',
+      marginTop: '16px'
     },
     productCard: {
       display: 'flex',
       backgroundColor: '#fff',
-      borderRadius: '8px',
-      marginBottom: '15px',
-      padding: '15px',
-      boxShadow: '0 1px 2px rgba(0, 0, 0, 0.05)',
+      borderRadius: '16px',
+      marginBottom: '16px',
+      padding: '16px',
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
+      cursor: 'pointer',
+      transition: 'transform 0.2s, box-shadow 0.2s',
+      ':hover': {
+        transform: 'translateY(-2px)',
+        boxShadow: '0 6px 16px rgba(0, 0, 0, 0.1)'
+      }
     },
     productImage: {
       width: '80px',
       height: '80px',
-      marginRight: '15px',
-      borderRadius: '4px',
+      marginRight: '16px',
+      borderRadius: '12px',
       overflow: 'hidden',
+      boxShadow: '0 3px 8px rgba(0, 0, 0, 0.06)'
     },
     productInfo: {
       flex: 1,
     },
     productTitle: {
       fontSize: '16px',
-      fontWeight: 500,
+      fontWeight: 600,
       margin: '0 0 8px',
+      color: '#2c3e50'
     },
     productMeta: {
       display: 'flex',
       justifyContent: 'space-between',
       marginBottom: '8px',
-      fontSize: '12px',
-      color: '#777',
+      fontSize: '13px',
+      color: '#7f8c8d',
     },
     productDetails: {
       fontSize: '13px',
       marginBottom: '8px',
+      background: '#f8fbfd',
+      padding: '10px',
+      borderRadius: '10px'
     },
     detailItem: {
-      marginBottom: '3px',
+      marginBottom: '5px',
+      display: 'flex'
     },
     detailLabel: {
-      color: '#777',
+      color: '#7f8c8d',
       marginRight: '5px',
+      width: '70px'
+    },
+    detailValue: {
+      fontWeight: '500',
+      color: '#34495e'
     },
     productStatus: {
       display: 'flex',
@@ -223,27 +264,32 @@ const RecyclableProductsList = () => {
     },
     statusBadge: {
       display: 'inline-block',
-      padding: '4px 8px',
-      borderRadius: '4px',
-      fontSize: '12px',
+      padding: '6px 12px',
+      borderRadius: '20px',
+      fontSize: '13px',
       fontWeight: 500,
+      boxShadow: '0 2px 5px rgba(0, 0, 0, 0.06)'
     },
     waitingBadge: {
-      backgroundColor: '#FFE0B2',
-      color: '#E65100',
+      backgroundColor: '#FFE8D4',
+      color: '#E65100'
     },
     progressBadge: {
-      backgroundColor: '#B3E5FC',
-      color: '#01579B',
+      backgroundColor: '#CCEAFF',
+      color: '#0277BD'
     },
     completedBadge: {
-      backgroundColor: '#C8E6C9',
-      color: '#2E7D32',
+      backgroundColor: '#DDFBE6',
+      color: '#2E7D32'
     },
     noResults: {
       textAlign: 'center',
       padding: '30px 0',
-      color: '#777',
+      color: '#7f8c8d',
+      backgroundColor: '#fff',
+      borderRadius: '16px',
+      margin: '16px',
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
     },
     floatingButtonContainer: {
       position: 'fixed',
@@ -254,12 +300,15 @@ const RecyclableProductsList = () => {
       width: '56px',
       height: '56px',
       borderRadius: '50%',
-      backgroundColor: '#00c471',
+      backgroundColor: '#4cd686',
       color: 'white',
       fontSize: '24px',
       border: 'none',
-      boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2)',
+      boxShadow: '0 4px 15px rgba(76, 214, 134, 0.4)',
       cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
     },
   };
 
@@ -285,6 +334,10 @@ const RecyclableProductsList = () => {
       
       {/* 필터 영역 */}
       <div style={styles.filterContainer}>
+        <h3 style={styles.sectionHeader}>
+          <span style={styles.sectionIcon}>🔍</span>
+          필터
+        </h3>
         <div style={styles.buttonGroup}>
           <button 
             type="button"
@@ -331,6 +384,10 @@ const RecyclableProductsList = () => {
       
       {/* 정렬 옵션 */}
       <div style={styles.sortContainer}>
+        <h3 style={styles.sectionHeader}>
+          <span style={styles.sectionIcon}>⏱️</span>
+          정렬
+        </h3>
         <div style={styles.toggleButtons}>
           <button 
             type="button"
@@ -382,15 +439,15 @@ const RecyclableProductsList = () => {
                 <div style={styles.productDetails}>
                   <div style={styles.detailItem}>
                     <span style={styles.detailLabel}>카테고리:</span>
-                    <span>{product.category}</span>
+                    <span style={styles.detailValue}>{product.category}</span>
                   </div>
                   <div style={styles.detailItem}>
                     <span style={styles.detailLabel}>등급:</span>
-                    <span>{product.condition}</span>
+                    <span style={styles.detailValue}>{product.condition}</span>
                   </div>
                   <div style={styles.detailItem}>
                     <span style={styles.detailLabel}>수량:</span>
-                    <span>{product.quantity}</span>
+                    <span style={styles.detailValue}>{product.quantity}</span>
                   </div>
                 </div>
                 <div style={styles.productStatus}>
