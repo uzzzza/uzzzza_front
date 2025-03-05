@@ -45,265 +45,268 @@ const ProductUploadForm = () => {
     // 스타일: detail.jsx와 동일한 스타일 적용
     const styles = {
         container: {
-            maxWidth: '480px',
-            margin: '0 auto',
-            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
-            backgroundColor: '#f7f9fc',
-            color: '#333',
-            paddingBottom: '80px'
+            maxWidth: "480px",
+            margin: "0 auto",
+            fontFamily:
+                '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
+            backgroundColor: "#f7f9fc",
+            color: "#333",
+            paddingBottom: "80px",
         },
         formHeader: {
-            display: 'flex',
-            alignItems: 'center',
-            padding: '18px 15px',
-            backgroundColor: '#fff',
-            position: 'sticky',
+            display: "flex",
+            alignItems: "center",
+            padding: "18px 15px",
+            backgroundColor: "#fff",
+            position: "sticky",
             top: 0,
             zIndex: 10,
-            borderBottom: '1px solid #f0f0f0',
-            boxShadow: '0 2px 10px rgba(0, 0, 0, 0.05)'
+            borderBottom: "1px solid #f0f0f0",
+            boxShadow: "0 2px 10px rgba(0, 0, 0, 0.05)",
         },
         backButton: {
-            background: '#f5f7fa',
-            border: 'none',
-            fontSize: '18px',
-            width: '36px',
-            height: '36px',
-            borderRadius: '50%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginRight: '12px',
-            cursor: 'pointer',
-            color: '#555',
-            boxShadow: '0 2px 5px rgba(0, 0, 0, 0.05)'
+            background: "#f5f7fa",
+            border: "none",
+            fontSize: "18px",
+            width: "36px",
+            height: "36px",
+            borderRadius: "50%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginRight: "12px",
+            cursor: "pointer",
+            color: "#555",
+            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.05)",
         },
         headerTitle: {
-            fontSize: '18px',
+            fontSize: "18px",
             margin: 0,
-            fontWeight: 600
+            fontWeight: 600,
         },
         form: {
-            padding: '15px',
+            padding: "15px",
         },
         formGroup: {
-            background: 'white',
-            padding: '20px',
-            marginTop: '8px',
-            borderRadius: '16px',
-            margin: '16px',
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)'
+            background: "white",
+            padding: "20px",
+            marginTop: "8px",
+            borderRadius: "16px",
+            margin: "16px",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.08)",
         },
         label: {
-            display: 'block',
-            fontSize: '15px',
+            display: "block",
+            fontSize: "15px",
             fontWeight: 600,
-            marginBottom: '12px',
-            color: '#2c3e50'
+            marginBottom: "12px",
+            color: "#2c3e50",
         },
         required: {
-            color: '#4cd686',
-            marginLeft: '4px'
+            color: "#4cd686",
+            marginLeft: "4px",
         },
         inputCounter: {
-            position: 'relative'
+            position: "relative",
         },
         input: {
-            width: '100%',
-            padding: '12px',
-            border: '1px solid #e0e6ed',
-            borderRadius: '12px',
-            fontSize: '14px',
-            boxSizing: 'border-box',
-            boxShadow: '0 2px 5px rgba(0, 0, 0, 0.03)'
+            width: "100%",
+            padding: "12px",
+            border: "1px solid #e0e6ed",
+            borderRadius: "12px",
+            fontSize: "14px",
+            boxSizing: "border-box",
+            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.03)",
         },
         counter: {
-            position: 'absolute',
-            right: '12px',
-            bottom: '12px',
-            fontSize: '12px',
-            color: '#7f8c8d'
+            position: "absolute",
+            right: "12px",
+            bottom: "12px",
+            fontSize: "12px",
+            color: "#7f8c8d",
         },
         sectionHeader: {
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: '15px',
-            fontSize: '17px',
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: "15px",
+            fontSize: "17px",
             fontWeight: 600,
-            color: '#2c3e50'
+            color: "#2c3e50",
         },
         sectionIcon: {
-            marginRight: '8px',
-            fontSize: '20px',
-            color: '#4cd686'
+            marginRight: "8px",
+            fontSize: "20px",
+            color: "#4cd686",
         },
         infoButton: {
-            background: 'none',
-            border: 'none',
-            color: '#7f8c8d',
-            fontSize: '18px',
-            cursor: 'pointer'
+            background: "none",
+            border: "none",
+            color: "#7f8c8d",
+            fontSize: "18px",
+            cursor: "pointer",
         },
         formRow: {
-            display: 'flex',
-            padding: '12px',
-            borderBottom: '1px solid #f0f0f0',
-            background: '#f8fbfd',
-            borderRadius: '12px',
-            marginBottom: '8px'
+            display: "flex",
+            padding: "12px",
+            borderBottom: "1px solid #f0f0f0",
+            background: "#f8fbfd",
+            borderRadius: "12px",
+            marginBottom: "8px",
         },
         formLabel: {
-            width: '80px',
-            color: '#7f8c8d',
-            fontSize: '13px'
+            width: "80px",
+            color: "#7f8c8d",
+            fontSize: "13px",
         },
         formValue: {
             flex: 1,
-            fontSize: '15px',
-            fontWeight: '500',
-            color: '#34495e'
+            fontSize: "15px",
+            fontWeight: "500",
+            color: "#34495e",
         },
         buttonGroup: {
-            display: 'flex',
-            gap: '8px',
-            marginBottom: '8px',
-            flexWrap: 'wrap'
+            display: "flex",
+            gap: "8px",
+            marginBottom: "8px",
+            flexWrap: "wrap",
         },
         button: {
             flex: 1,
-            padding: '12px 0',
-            border: '1px solid #e0e6ed',
-            backgroundColor: '#fff',
-            borderRadius: '12px',
-            fontSize: '14px',
-            cursor: 'pointer',
-            transition: 'all 0.2s ease',
-            fontWeight: 500
+            padding: "12px 0",
+            border: "1px solid #e0e6ed",
+            backgroundColor: "#fff",
+            borderRadius: "12px",
+            fontSize: "14px",
+            cursor: "pointer",
+            transition: "all 0.2s ease",
+            fontWeight: 500,
         },
         selectedButton: {
-            backgroundColor: '#4cd686',
-            color: 'white',
-            borderColor: '#4cd686',
-            boxShadow: '0 4px 10px rgba(76, 214, 134, 0.3)'
+            backgroundColor: "#4cd686",
+            color: "white",
+            borderColor: "#4cd686",
+            boxShadow: "0 4px 10px rgba(76, 214, 134, 0.3)",
         },
         toggleButtons: {
-            display: 'flex',
-            border: '1px solid #e0e6ed',
-            borderRadius: '12px',
-            overflow: 'hidden',
-            boxShadow: '0 2px 5px rgba(0, 0, 0, 0.03)'
+            display: "flex",
+            border: "1px solid #e0e6ed",
+            borderRadius: "12px",
+            overflow: "hidden",
+            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.03)",
         },
         weightInput: {
-            display: 'flex',
-            alignItems: 'center'
+            display: "flex",
+            alignItems: "center",
         },
         unitSelector: {
-            width: '60px',
-            padding: '12px 0',
-            textAlign: 'center',
-            backgroundColor: '#f5f7fa',
-            border: '1px solid #e0e6ed',
-            borderLeft: 'none',
-            borderRadius: '0 12px 12px 0',
-            fontSize: '14px',
+            width: "60px",
+            padding: "12px 0",
+            textAlign: "center",
+            backgroundColor: "#f5f7fa",
+            border: "1px solid #e0e6ed",
+            borderLeft: "none",
+            borderRadius: "0 12px 12px 0",
+            fontSize: "14px",
             fontWeight: 500,
-            color: '#34495e'
+            color: "#34495e",
         },
         dateRange: {
-            display: 'flex',
-            alignItems: 'center'
+            display: "flex",
+            alignItems: "center",
         },
         dateSeparator: {
-            margin: '0 10px',
-            color: '#7f8c8d'
+            margin: "0 10px",
+            color: "#7f8c8d",
         },
         imageUpload: {
-            marginTop: '10px',
-            width: '100%',
-            height: '180px',
-            position: 'relative',
-            overflow: 'hidden',
-            borderRadius: '12px',
-            cursor: 'pointer',
-            boxShadow: '0 3px 8px rgba(0, 0, 0, 0.06)'
+            marginTop: "10px",
+            width: "100%",
+            height: "180px",
+            position: "relative",
+            overflow: "hidden",
+            borderRadius: "12px",
+            cursor: "pointer",
+            boxShadow: "0 3px 8px rgba(0, 0, 0, 0.06)",
         },
         uploadPlaceholder: {
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '180px',
-            border: '1px dashed #e0e6ed',
-            borderRadius: '12px',
-            cursor: 'pointer',
-            backgroundColor: '#f8fbfd'
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "180px",
+            border: "1px dashed #e0e6ed",
+            borderRadius: "12px",
+            cursor: "pointer",
+            backgroundColor: "#f8fbfd",
         },
         plusIcon: {
-            fontSize: '32px',
-            color: '#4cd686',
-            marginBottom: '10px'
+            fontSize: "32px",
+            color: "#4cd686",
+            marginBottom: "10px",
         },
         uploadText: {
-            fontSize: '14px',
-            color: '#7f8c8d'
+            fontSize: "14px",
+            color: "#7f8c8d",
         },
         submitButton: {
-            width: '100%',
-            padding: '14px 0',
-            backgroundColor: '#4cd686',
-            color: 'white',
-            border: 'none',
-            borderRadius: '30px',
-            fontSize: '16px',
+            width: "100%",
+            padding: "14px 0",
+            backgroundColor: "#4cd686",
+            color: "white",
+            border: "none",
+            borderRadius: "30px",
+            fontSize: "16px",
             fontWeight: 600,
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 4px 10px rgba(76, 214, 134, 0.3)'
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxShadow: "0 4px 10px rgba(76, 214, 134, 0.3)",
         },
         submitButtonIcon: {
-            marginRight: '8px',
-            fontSize: '20px'
+            marginRight: "8px",
+            fontSize: "20px",
         },
         textarea: {
-            width: '100%',
-            padding: '12px',
-            border: '1px solid #e0e6ed',
-            borderRadius: '12px',
-            fontSize: '14px',
-            boxSizing: 'border-box',
-            minHeight: '100px',
-            resize: 'none',
-            boxShadow: '0 2px 5px rgba(0, 0, 0, 0.03)'
+            width: "100%",
+            padding: "12px",
+            border: "1px solid #e0e6ed",
+            borderRadius: "12px",
+            fontSize: "14px",
+            boxSizing: "border-box",
+            minHeight: "100px",
+            resize: "none",
+            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.03)",
         },
         inputFile: {
-            display: 'none'
+            display: "none",
         },
         previewImage: {
-            width: '100%',
-            height: '180px',
-            objectFit: 'cover',
-            borderRadius: '12px'
+            width: "100%",
+            height: "180px",
+            objectFit: "cover",
+            borderRadius: "12px",
         },
         submitButtonContainer: {
-            position: 'fixed',
+            position: "fixed",
             bottom: 0,
-            left: 0, 
+            left: 0,
             right: 0,
-            background: 'white',
-            padding: '12px 15px',
-            boxShadow: '0 -2px 10px rgba(0, 0, 0, 0.1)',
-            borderTopLeftRadius: '16px',
-            borderTopRightRadius: '16px'
-        }
+            background: "white",
+            padding: "12px 15px",
+            boxShadow: "0 -2px 10px rgba(0, 0, 0, 0.1)",
+            borderTopLeftRadius: "16px",
+            borderTopRightRadius: "16px",
+        },
     };
 
     return (
         <div style={styles.container}>
             <div style={styles.formHeader}>
-                <button style={styles.backButton} onClick={handleBackClick}>←</button>
+                <button style={styles.backButton} onClick={handleBackClick}>
+                    ←
+                </button>
                 <h2 style={styles.headerTitle}>제품등록 업로드</h2>
             </div>
 
@@ -322,9 +325,7 @@ const ProductUploadForm = () => {
                             onChange={(e) => setTitle(e.target.value)}
                             maxLength={25}
                         />
-                        <span style={styles.counter}>
-                            {title.length}/25자
-                        </span>
+                        <span style={styles.counter}>{title.length}/25자</span>
                     </div>
                 </div>
 
@@ -372,7 +373,13 @@ const ProductUploadForm = () => {
                             type="button"
                             style={{
                                 ...styles.button,
-                                ...(selectedCategory === "종이" ? styles.selectedButton : {})
+                                ...(selectedCategory === "종이"
+                                    ? styles.selectedButton
+                                    : {
+                                          border: "1px solid #ddd",
+                                          backgroundColor: "#fff",
+                                          color: "#333",
+                                      }),
                             }}
                             onClick={() => setSelectedCategory("종이")}
                         >
@@ -382,7 +389,13 @@ const ProductUploadForm = () => {
                             type="button"
                             style={{
                                 ...styles.button,
-                                ...(selectedCategory === "플라스틱" ? styles.selectedButton : {})
+                                ...(selectedCategory === "플라스틱"
+                                    ? styles.selectedButton
+                                    : {
+                                          border: "1px solid #ddd",
+                                          backgroundColor: "#fff",
+                                          color: "#333",
+                                      }),
                             }}
                             onClick={() => setSelectedCategory("플라스틱")}
                         >
@@ -392,7 +405,13 @@ const ProductUploadForm = () => {
                             type="button"
                             style={{
                                 ...styles.button,
-                                ...(selectedCategory === "금속" ? styles.selectedButton : {})
+                                ...(selectedCategory === "금속"
+                                    ? styles.selectedButton
+                                    : {
+                                          border: "1px solid #ddd",
+                                          backgroundColor: "#fff",
+                                          color: "#333",
+                                      }),
                             }}
                             onClick={() => setSelectedCategory("금속")}
                         >
@@ -402,7 +421,13 @@ const ProductUploadForm = () => {
                             type="button"
                             style={{
                                 ...styles.button,
-                                ...(selectedCategory === "유리" ? styles.selectedButton : {})
+                                ...(selectedCategory === "유리"
+                                    ? styles.selectedButton
+                                    : {
+                                          border: "1px solid #ddd",
+                                          backgroundColor: "#fff",
+                                          color: "#333",
+                                      }),
                             }}
                             onClick={() => setSelectedCategory("유리")}
                         >
@@ -412,7 +437,13 @@ const ProductUploadForm = () => {
                             type="button"
                             style={{
                                 ...styles.button,
-                                ...(selectedCategory === "전자제품" ? styles.selectedButton : {})
+                                ...(selectedCategory === "전자제품"
+                                    ? styles.selectedButton
+                                    : {
+                                          border: "1px solid #ddd",
+                                          backgroundColor: "#fff",
+                                          color: "#333",
+                                      }),
                             }}
                             onClick={() => setSelectedCategory("전자제품")}
                         >
@@ -422,7 +453,13 @@ const ProductUploadForm = () => {
                             type="button"
                             style={{
                                 ...styles.button,
-                                ...(selectedCategory === "기타" ? styles.selectedButton : {})
+                                ...(selectedCategory === "기타"
+                                    ? styles.selectedButton
+                                    : {
+                                          border: "1px solid #ddd",
+                                          backgroundColor: "#fff",
+                                          color: "#333",
+                                      }),
                             }}
                             onClick={() => setSelectedCategory("기타")}
                         >
@@ -442,7 +479,13 @@ const ProductUploadForm = () => {
                             type="button"
                             style={{
                                 ...styles.button,
-                                ...(selectedCondition === "A" ? styles.selectedButton : {})
+                                ...(selectedCondition === "A"
+                                    ? styles.selectedButton
+                                    : {
+                                          border: "1px solid #ddd",
+                                          backgroundColor: "#fff",
+                                          color: "#333",
+                                      }),
                             }}
                             onClick={() => setSelectedCondition("A")}
                         >
@@ -452,7 +495,13 @@ const ProductUploadForm = () => {
                             type="button"
                             style={{
                                 ...styles.button,
-                                ...(selectedCondition === "B" ? styles.selectedButton : {})
+                                ...(selectedCondition === "B"
+                                    ? styles.selectedButton
+                                    : {
+                                          border: "1px solid #ddd",
+                                          backgroundColor: "#fff",
+                                          color: "#333",
+                                      }),
                             }}
                             onClick={() => setSelectedCondition("B")}
                         >
@@ -462,7 +511,13 @@ const ProductUploadForm = () => {
                             type="button"
                             style={{
                                 ...styles.button,
-                                ...(selectedCondition === "C" ? styles.selectedButton : {})
+                                ...(selectedCondition === "C"
+                                    ? styles.selectedButton
+                                    : {
+                                          border: "1px solid #ddd",
+                                          backgroundColor: "#fff",
+                                          color: "#333",
+                                      }),
                             }}
                             onClick={() => setSelectedCondition("C")}
                         >
@@ -482,7 +537,7 @@ const ProductUploadForm = () => {
                             type="number"
                             style={{
                                 ...styles.input,
-                                borderRadius: '12px 0 0 12px',
+                                borderRadius: "12px 0 0 12px",
                             }}
                             min={0}
                             value={weight}
@@ -497,8 +552,7 @@ const ProductUploadForm = () => {
                 <div style={styles.formGroup}>
                     <label style={styles.label}>
                         <span style={styles.sectionIcon}>📅</span>
-                        희망 수령 기간{" "}
-                        <span style={styles.required}>*</span>
+                        희망 수령 기간 <span style={styles.required}>*</span>
                     </label>
                     <div style={styles.dateRange}>
                         <input
@@ -533,8 +587,10 @@ const ProductUploadForm = () => {
                                 ...styles.button,
                                 flex: 1,
                                 borderRadius: 0,
-                                border: 'none',
-                                ...(cleaningStatus === "세척 완료" ? styles.selectedButton : {})
+                                border: "none",
+                                ...(cleaningStatus === "세척 완료"
+                                    ? styles.selectedButton
+                                    : {}),
                             }}
                             onClick={() => setCleaningStatus("세척 완료")}
                         >
@@ -546,8 +602,10 @@ const ProductUploadForm = () => {
                                 ...styles.button,
                                 flex: 1,
                                 borderRadius: 0,
-                                border: 'none',
-                                ...(cleaningStatus === "세척 전" ? styles.selectedButton : {})
+                                border: "none",
+                                ...(cleaningStatus === "세척 전"
+                                    ? styles.selectedButton
+                                    : {}),
                             }}
                             onClick={() => setCleaningStatus("세척 전")}
                         >
@@ -570,8 +628,10 @@ const ProductUploadForm = () => {
                                 ...styles.button,
                                 flex: 1,
                                 borderRadius: 0,
-                                border: 'none',
-                                ...(includePackaging === "포함" ? styles.selectedButton : {})
+                                border: "none",
+                                ...(includePackaging === "포함"
+                                    ? styles.selectedButton
+                                    : {}),
                             }}
                             onClick={() => setIncludePackaging("포함")}
                         >
@@ -583,8 +643,10 @@ const ProductUploadForm = () => {
                                 ...styles.button,
                                 flex: 1,
                                 borderRadius: 0,
-                                border: 'none',
-                                ...(includePackaging === "미포함" ? styles.selectedButton : {})
+                                border: "none",
+                                ...(includePackaging === "미포함"
+                                    ? styles.selectedButton
+                                    : {}),
                             }}
                             onClick={() => setIncludePackaging("미포함")}
                         >
@@ -619,10 +681,7 @@ const ProductUploadForm = () => {
                         <span style={styles.sectionIcon}>🖼️</span>
                         상세 사진
                     </label>
-                    <div
-                        style={styles.imageUpload}
-                        onClick={openFilePicker}
-                    >
+                    <div style={styles.imageUpload} onClick={openFilePicker}>
                         {image ? (
                             <img
                                 src={image}
@@ -660,8 +719,8 @@ const ProductUploadForm = () => {
                                 ...styles.button,
                                 flex: 1,
                                 borderRadius: 0,
-                                border: 'none',
-                                ...(isVisitPickup ? styles.selectedButton : {})
+                                border: "none",
+                                ...(isVisitPickup ? styles.selectedButton : {}),
                             }}
                             onClick={() => setIsVisitPickup(true)}
                         >
@@ -673,8 +732,10 @@ const ProductUploadForm = () => {
                                 ...styles.button,
                                 flex: 1,
                                 borderRadius: 0,
-                                border: 'none',
-                                ...(!isVisitPickup ? styles.selectedButton : {})
+                                border: "none",
+                                ...(!isVisitPickup
+                                    ? styles.selectedButton
+                                    : {}),
                             }}
                             onClick={() => setIsVisitPickup(false)}
                         >
@@ -696,8 +757,10 @@ const ProductUploadForm = () => {
                                 ...styles.button,
                                 flex: 1,
                                 borderRadius: 0,
-                                border: 'none',
-                                ...(isDeliveryPossible ? styles.selectedButton : {})
+                                border: "none",
+                                ...(isDeliveryPossible
+                                    ? styles.selectedButton
+                                    : {}),
                             }}
                             onClick={() => setIsDeliveryPossible(true)}
                         >
@@ -709,8 +772,10 @@ const ProductUploadForm = () => {
                                 ...styles.button,
                                 flex: 1,
                                 borderRadius: 0,
-                                border: 'none',
-                                ...(!isDeliveryPossible ? styles.selectedButton : {})
+                                border: "none",
+                                ...(!isDeliveryPossible
+                                    ? styles.selectedButton
+                                    : {}),
                             }}
                             onClick={() => setIsDeliveryPossible(false)}
                         >
