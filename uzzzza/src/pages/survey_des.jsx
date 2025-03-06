@@ -139,7 +139,7 @@ const SurveyDescriptive = () => {
                 console.log(localStorage);
 
                 alert("설문이 완료되었습니다! 참여해 주셔서 감사합니다.");
-                navigate("/"); // Navigate to home or completion page
+                navigate("/score"); // Navigate to home or completion page
             } catch (error) {
                 console.error("응답 제출 실패:", error);
                 alert("응답 제출 중 오류가 발생했습니다.");
