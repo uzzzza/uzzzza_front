@@ -7,6 +7,7 @@ const RecyclableProductsList = () => {
     const [selectedFilter, setSelectedFilter] = useState("전체");
     const [selectedCategory, setSelectedCategory] = useState("전체");
     const [products, setProducts] = useState([]);
+    const [isFilterExpanded, setIsFilterExpanded] = useState(false);
 
     useEffect(() => {
         fetch("/data/products.json") // JSON 파일 경로
@@ -26,6 +27,10 @@ const RecyclableProductsList = () => {
     // 마이페이지(에코스코어) 페이지로 이동하는 핸들러 추가
     const handleMyPageClick = () => {
         navigate("/score");
+    };
+
+    const toggleFilterSection = () => {
+        setIsFilterExpanded(!isFilterExpanded);
     };
 
     // 필터링된 제품 목록
@@ -100,7 +105,7 @@ const RecyclableProductsList = () => {
         },
         filterContainer: {
             backgroundColor: "#fff",
-            padding: "20px",
+            padding: "12px",
             marginTop: "8px",
             borderRadius: "16px",
             margin: "16px",
@@ -109,21 +114,44 @@ const RecyclableProductsList = () => {
         sectionHeader: {
             fontSize: "17px",
             fontWeight: 600,
-            margin: "0 0 16px",
+            // margin: "0 0 12px",
             color: "#2c3e50",
             display: "flex",
             alignItems: "center",
+            justifyContent: "space-between",
+            cursor: "pointer",
         },
         sectionIcon: {
             marginRight: "8px",
             fontSize: "20px",
             color: "#4cd686",
         },
+        collapsedButtonGroup: {
+            maxHeight: "0",
+            overflow: "hidden",
+        },
+        selectedFilterDisplay: {
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "8px",
+            margin: "8px 0",
+        },
+        selectedFilterBadge: {
+            padding: "6px 12px",
+            borderRadius: "20px",
+            fontSize: "13px",
+            backgroundColor: "#e9f7f0",
+            color: "#4cd686",
+            fontWeight: 500,
+        },
         buttonGroup: {
             display: "flex",
             gap: "8px",
             marginBottom: "8px",
             flexWrap: "wrap",
+            overflow: "hidden", // 부드러운 애니메이션을 위해
+            maxHeight: "1000px", // 모든 버튼을 수용할 큰 값
+            transition: "max-height 0.3s ease",
         },
         button: {
             flex: 1,
@@ -267,9 +295,12 @@ const RecyclableProductsList = () => {
         categoryButtonGroup: {
             display: "flex",
             gap: "8px",
-            marginBottom: "8px",
+            marginTop: "8px",
             flexWrap: "wrap",
             justifyContent: "center",
+            overflow: "hidden",
+            maxHeight: "1000px",
+            transition: "max-height 0.3s ease",
         },
         categoryButton: {
             flex: "1 1 120px",
@@ -298,6 +329,19 @@ const RecyclableProductsList = () => {
         myPageIcon: {
             marginRight: "4px",
         },
+        toggleIcon: {
+            fontSize: "20px",
+            color: "#7f8c8d",
+            transition: "transform 0.3s ease",
+        },
+        rotatedIcon: {
+            transform: "rotate(180deg)",
+        },
+        filterLine: {
+            color: "#7f8c8d",
+            margin: "4px, 0px",
+            overflow: "hidden",
+        }
     };
 
     return (
@@ -326,11 +370,28 @@ const RecyclableProductsList = () => {
 
             {/* 필터 영역 */}
             <div style={styles.filterContainer}>
-                <h3 style={styles.sectionHeader}>
-                    <span style={styles.sectionIcon}>🔍</span>
-                    필터
-                </h3>
-                <div style={styles.buttonGroup}>
+                <div style={styles.sectionHeader} onClick={toggleFilterSection}>
+                    <div>
+                        <span style={styles.sectionIcon}>🔍</span>
+                        필터
+                    </div>
+                    <span 
+                        style={{
+                            ...styles.toggleIcon, 
+                            ...(isFilterExpanded ? styles.rotatedIcon : {})
+                        }}
+                    >
+                        ▼
+                    </span>
+                </div>
+                
+                {/* 상태 필터 (수거대기, 진행중 등) */}
+                <div 
+                    style={{
+                        ...styles.buttonGroup,
+                        ...(isFilterExpanded ? {} : styles.collapsedButtonGroup)
+                    }}
+                >
                     <button
                         type="button"
                         style={{
@@ -396,15 +457,14 @@ const RecyclableProductsList = () => {
                         수거완료
                     </button>
                 </div>
-            </div>
-
-            {/* 카테고리 옵션 */}
-            <div style={styles.sortContainer}>
-                <h3 style={styles.sectionHeader}>
-                    <span style={styles.sectionIcon}>⏱️</span>
-                    카테고리
-                </h3>
-                <div style={styles.categoryButtonGroup}>
+                
+                {/* 카테고리 필터 (플라스틱, 의류 등) */}
+                <div 
+                    style={{
+                        ...styles.categoryButtonGroup,
+                        ...(isFilterExpanded ? {} : styles.collapsedButtonGroup)
+                    }}
+                >
                     <button
                         type="button"
                         style={{
@@ -421,7 +481,6 @@ const RecyclableProductsList = () => {
                     >
                         전체
                     </button>
-
                     <button
                         type="button"
                         style={{
