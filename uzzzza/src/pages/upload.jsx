@@ -1,17 +1,17 @@
 import React, { useState, useRef } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ProductUploadForm = () => {
     const navigate = useNavigate(); // 네비게이션 훅 추가
     const today = new Date().toISOString().split("T")[0];
-    const [startDate, setStartDate] = useState(today);
+    const [startDate] = useState(today);
     const [endDate, setEndDate] = useState("");
     const [image, setImage] = useState(null);
     const fileInputRef = useRef(null);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [selectedCategory, setSelectedCategory] = useState("종이");
-    const [selectedCondition, setSelectedCondition] = useState("A");
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [selectedCondition, setSelectedCondition] = useState("");
     const [weight, setWeight] = useState("");
     const [cleaningStatus, setCleaningStatus] = useState("세척 완료");
     const [includePackaging, setIncludePackaging] = useState("포함");
@@ -23,10 +23,41 @@ const ProductUploadForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // 여기에 데이터 저장 로직이 들어갈 수 있음
+        // 업로드 데이터 생성
+        const uploadData = {
+            startDate,
+            endDate,
+            title,
+            description,
+            selectedCategory,
+            selectedCondition,
+            weight,
+            cleaningStatus,
+            includePackaging,
+            isVisitPickup,
+            isDeliveryPossible,
+            image: image || null, // 선택 사항 (null 가능)
+        };
 
-        // 저장 후 메인 페이지로 이동
-        navigate("/");
+        // 필수 항목이 비어있는지 체크
+        if (
+            !startDate ||
+            !endDate ||
+            !title ||
+            !description ||
+            !selectedCategory ||
+            !selectedCondition ||
+            !weight ||
+            !cleaningStatus ||
+            !includePackaging
+        ) {
+            alert("모든 필수 항목을 입력해주세요.");
+            return;
+        } else {
+            // 저장 후 메인 페이지로 이동
+            console.log("업로드 데이터:", uploadData);
+            navigate("/");
+        }
     };
     const openFilePicker = () => {
         fileInputRef.current.click();
@@ -644,7 +675,7 @@ const ProductUploadForm = () => {
                 <div style={styles.formGroup}>
                     <label style={styles.label}>
                         <span style={styles.sectionIcon}>📝</span>
-                        제품 설명
+                        제품 설명<span style={styles.required}>*</span>
                     </label>
                     <div style={styles.inputCounter}>
                         <textarea
