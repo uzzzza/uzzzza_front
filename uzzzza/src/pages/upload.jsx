@@ -6,7 +6,8 @@ const ProductUploadForm = () => {
     const today = new Date().toISOString().split("T")[0];
     const [startDate] = useState(today);
     const [endDate, setEndDate] = useState("");
-    const [image, setImage] = useState(null);
+    const [imageFile, setImageFile] = useState(null); // 실제 파일 객체 저장
+    const [imagePreview, setImagePreview] = useState(null); // 미리보기용 URL
     const fileInputRef = useRef(null);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -17,83 +18,77 @@ const ProductUploadForm = () => {
     const [includePackaging, setIncludePackaging] = useState("포함");
     const [isVisitPickup, setIsVisitPickup] = useState(true);
     const [isDeliveryPossible, setIsDeliveryPossible] = useState(true);
+    
     const handleBackClick = () => {
         navigate("/"); // 메인 페이지로 이동
     };
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // 업로드 데이터 생성
-        const uploadData = {
-            startDate,
-            endDate,
-            title,
-            description,
-            selectedCategory,
-            selectedCondition,
-            weight,
-            cleaningStatus,
-            includePackaging,
-            isVisitPickup,
-            isDeliveryPossible,
-            image: image || null, // 선택 사항 (null 가능)
-        };
-
-        // 필수 항목이 비어있는지 체크
-        if (
-            !startDate ||
-            !endDate ||
-            !title ||
-            !description ||
-            !selectedCategory ||
-            !selectedCondition ||
-            !weight ||
-            !cleaningStatus ||
-            !includePackaging
-        ) {
+    
+        if (!title || !selectedCategory || !startDate || !endDate || !description || !selectedCondition || !weight || !cleaningStatus || !includePackaging) {
             alert("모든 필수 항목을 입력해주세요.");
             return;
-        } else {
-            // api post 요청
-            try {
-                console.log(uploadData);
-                const response = await fetch(
-                    "https://4tk2vliwiwoy34yb3t25tdxtza0avyvb.lambda-url.ap-northeast-2.on.aws/",
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(uploadData),
-                    }
-                );
-
-                if (!response.ok) {
-                    throw new Error(`서버 응답 오류: ${response.status}`);
-                }
-
-                const result = await response.json();
-                console.log("업로드 성공:", result);
-                alert("제품 등록이 완료되었습니다!");
-            } catch (error) {
-                console.error("업로드 실패:", error);
-                alert("제품 등록 중 오류가 발생했습니다.");
+        }
+    
+        try {
+            const formData = new FormData();
+            formData.append("title", title);
+            formData.append("selectedCondition", selectedCondition);
+            formData.append("selectedCategory", selectedCategory);
+            formData.append("weight", weight);
+            formData.append("startDate", startDate);
+            formData.append("endDate", endDate);
+            formData.append("cleaningStatus", cleaningStatus);
+            formData.append("includePackaging", includePackaging);
+            formData.append("description", description);
+            formData.append("isVisitPickup", isVisitPickup);
+            formData.append("isDeliveryPossible", isDeliveryPossible);
+    
+            if (imageFile) {
+                formData.append("image", imageFile);
             }
-
+    
+            // FormData 내용 확인 (디버깅)
+            for (let pair of formData.entries()) {
+                console.log(pair[0], pair[1]);
+            }
+    
+            const response = await fetch(
+                "https://yh32e7w55w44g4h3lb6mdn62da0evvig.lambda-url.ap-northeast-2.on.aws/",
+                {
+                    method: "POST",
+                    body: formData,
+                }
+            );
+    
+            if (!response.ok) {
+                throw new Error(`서버 응답 오류: ${response.status}`);
+            }
+    
+            const result = await response.json();
+            console.log("업로드 성공:", result);
+            alert("제품 등록이 완료되었습니다!");
             navigate("/");
+        } catch (error) {
+            console.error("업로드 실패:", error);
+            alert("제품 등록 중 오류가 발생했습니다.");
         }
     };
+    
     const openFilePicker = () => {
         fileInputRef.current.click();
     };
+    
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setImage(reader.result);
-            };
-            reader.readAsDataURL(file);
+            // 파일 자체를 저장
+            setImageFile(file);
+            
+            // 미리보기 URL 생성
+            const previewUrl = URL.createObjectURL(file);
+            setImagePreview(previewUrl);
         }
     };
 
@@ -399,22 +394,22 @@ const ProductUploadForm = () => {
 
                     <div style={styles.formRow}>
                         <div style={styles.formLabel}>기관명</div>
-                        <div style={styles.formValue}>도매</div>
+                        <div style={styles.formValue}>친환경주식회사</div>
                     </div>
 
                     <div style={styles.formRow}>
                         <div style={styles.formLabel}>담당자</div>
-                        <div style={styles.formValue}>김앤대</div>
+                        <div style={styles.formValue}>김환경</div>
                     </div>
 
                     <div style={styles.formRow}>
                         <div style={styles.formLabel}>연락처</div>
-                        <div style={styles.formValue}>010-0000-0000</div>
+                        <div style={styles.formValue}>010-5031-8728</div>
                     </div>
 
                     <div style={styles.formRow}>
                         <div style={styles.formLabel}>주소</div>
-                        <div style={styles.formValue}>-</div>
+                        <div style={styles.formValue}>서울시 강남구 에코로 123</div>
                     </div>
                 </div>
 
@@ -722,9 +717,9 @@ const ProductUploadForm = () => {
                         상세 사진
                     </label>
                     <div style={styles.imageUpload} onClick={openFilePicker}>
-                        {image ? (
+                        {imagePreview ? (
                             <img
-                                src={image}
+                                src={imagePreview}
                                 alt="미리보기"
                                 style={styles.previewImage}
                             />
