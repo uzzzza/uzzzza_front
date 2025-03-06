@@ -2,12 +2,13 @@ import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ProductUploadForm = () => {
-    const navigate = useNavigate(); // 네비게이션 훅 추가
+    const navigate = useNavigate();
     const today = new Date().toISOString().split("T")[0];
     const [startDate] = useState(today);
     const [endDate, setEndDate] = useState("");
-    const [imageFile, setImageFile] = useState(null); // 실제 파일 객체 저장
-    const [imagePreview, setImagePreview] = useState(null); // 미리보기용 URL
+    const [imageFile, setImageFile] = useState(null);
+    const [imagePreview, setImagePreview] = useState(null);
+    const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
     const fileInputRef = useRef(null);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -18,9 +19,128 @@ const ProductUploadForm = () => {
     const [includePackaging, setIncludePackaging] = useState("포함");
     const [isVisitPickup, setIsVisitPickup] = useState(true);
     const [isDeliveryPossible, setIsDeliveryPossible] = useState(true);
+    const [isUploading, setIsUploading] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState(0);
     
     const handleBackClick = () => {
-        navigate("/"); // 메인 페이지로 이동
+        navigate("/");
+    };
+    
+    // Function to get a presigned URL for uploading
+    const getPresignedUrl = async (file) => {
+        try {
+            const requestData = {
+                action: "getUploadUrl",
+                fileType: file.type,
+                fileName: file.name,
+                folder: "items"
+            };
+            
+            const response = await fetch(
+                "https://yh32e7w55w44g4h3lb6mdn62da0evvig.lambda-url.ap-northeast-2.on.aws/",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(requestData),
+                }
+            );
+            
+            if (!response.ok) {
+                throw new Error(`Failed to get upload URL: ${response.status}`);
+            }
+            
+            return await response.json();
+        } catch (error) {
+            console.error("Error getting presigned URL:", error);
+            throw error;
+        }
+    };
+    
+    // Function to upload file directly to S3 using presigned URL with progress tracking
+    const uploadFileToS3 = async (file, uploadUrl) => {
+        try {
+            return new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                
+                xhr.upload.onprogress = (event) => {
+                    if (event.lengthComputable) {
+                        const percentComplete = (event.loaded / event.total) * 100;
+                        setUploadProgress(percentComplete);
+                        console.log(`Upload progress: ${percentComplete.toFixed(2)}%`);
+                    }
+                };
+                
+                xhr.open('PUT', uploadUrl, true);
+                
+                // Don't set Content-Type header manually as it causes CORS issues
+                // Let the browser set it automatically with the boundary for the multipart request
+                
+                xhr.onload = () => {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        resolve(true);
+                    } else {
+                        reject(new Error(`Failed to upload: ${xhr.status}`));
+                    }
+                };
+                
+                xhr.onerror = (e) => {
+                    console.error("XHR Error:", e);
+                    reject(new Error('Network error during upload'));
+                };
+                
+                // Send the file without additional headers
+                xhr.send(file);
+            });
+        } catch (error) {
+            console.error("Error uploading to S3:", error);
+            throw error;
+        }
+    };
+    
+    // Function to save item data after successful upload
+    const saveItemData = async (imageUrl) => {
+        try {
+            const cleaningStatusBool = cleaningStatus === "세척 완료";
+            const includePackagingBool = includePackaging === "포함";
+            
+            const itemData = {
+                action: "saveItemData",
+                title,
+                selectedCategory,
+                selectedCondition,
+                weight,
+                startDate,
+                endDate,
+                cleaningStatus: cleaningStatusBool,
+                includePackaging: includePackagingBool,
+                description,
+                isVisitPickup,
+                isDeliveryPossible,
+                imageUrl
+            };
+            
+            const response = await fetch(
+                "https://yh32e7w55w44g4h3lb6mdn62da0evvig.lambda-url.ap-northeast-2.on.aws/",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(itemData),
+                }
+            );
+            
+            if (!response.ok) {
+                throw new Error(`Failed to save item data: ${response.status}`);
+            }
+            
+            return await response.json();
+        } catch (error) {
+            console.error("Error saving item data:", error);
+            throw error;
+        }
     };
     
     const handleSubmit = async (e) => {
@@ -30,49 +150,40 @@ const ProductUploadForm = () => {
             alert("모든 필수 항목을 입력해주세요.");
             return;
         }
+        
+        setIsUploading(true);
+        setUploadProgress(0);
     
         try {
-            const formData = new FormData();
-            formData.append("title", title);
-            formData.append("selectedCondition", selectedCondition);
-            formData.append("selectedCategory", selectedCategory);
-            formData.append("weight", weight);
-            formData.append("startDate", startDate);
-            formData.append("endDate", endDate);
-            formData.append("cleaningStatus", cleaningStatus);
-            formData.append("includePackaging", includePackaging);
-            formData.append("description", description);
-            formData.append("isVisitPickup", isVisitPickup);
-            formData.append("isDeliveryPossible", isDeliveryPossible);
-    
+            let finalImageUrl = null;
+            
+            // Upload image if one is selected
             if (imageFile) {
-                formData.append("image", imageFile);
+                // Step 1: Get presigned URL
+                const presignedData = await getPresignedUrl(imageFile);
+                console.log("Presigned URL obtained:", presignedData);
+                
+                // Step 2: Upload to S3 with presigned URL
+                await uploadFileToS3(imageFile, presignedData.uploadUrl);
+                console.log("File uploaded to S3 successfully");
+                
+                // Use the fileUrl returned from presigned URL request
+                finalImageUrl = presignedData.fileUrl;
+                setUploadedImageUrl(finalImageUrl);
             }
-    
-            // FormData 내용 확인 (디버깅)
-            for (let pair of formData.entries()) {
-                console.log(pair[0], pair[1]);
-            }
-    
-            const response = await fetch(
-                "https://yh32e7w55w44g4h3lb6mdn62da0evvig.lambda-url.ap-northeast-2.on.aws/",
-                {
-                    method: "POST",
-                    body: formData,
-                }
-            );
-    
-            if (!response.ok) {
-                throw new Error(`서버 응답 오류: ${response.status}`);
-            }
-    
-            const result = await response.json();
-            console.log("업로드 성공:", result);
+            
+            // Step 3: Save item data with image URL
+            const result = await saveItemData(finalImageUrl);
+            console.log("Item data saved successfully:", result);
+            
             alert("제품 등록이 완료되었습니다!");
             navigate("/");
         } catch (error) {
-            console.error("업로드 실패:", error);
-            alert("제품 등록 중 오류가 발생했습니다.");
+            console.error("제품 등록 실패:", error);
+            alert(`제품 등록 중 오류가 발생했습니다: ${error.message}`);
+        } finally {
+            setIsUploading(false);
+            setUploadProgress(0);
         }
     };
     
@@ -83,15 +194,25 @@ const ProductUploadForm = () => {
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            // 파일 자체를 저장
-            setImageFile(file);
+            // Validate file type
+            if (!file.type.match('image.*')) {
+                alert('이미지 파일만 업로드 가능합니다.');
+                return;
+            }
             
-            // 미리보기 URL 생성
+            // Maximum file size (50MB for larger image files)
+            const maxSize = 50 * 1024 * 1024; 
+            if (file.size > maxSize) {
+                alert('파일 크기는 50MB 이하여야 합니다.');
+                return;
+            }
+            
+            // Store file and create preview
+            setImageFile(file);
             const previewUrl = URL.createObjectURL(file);
             setImagePreview(previewUrl);
         }
     };
-
     // 스타일: detail.jsx와 동일한 스타일 적용
     const styles = {
         container: {
