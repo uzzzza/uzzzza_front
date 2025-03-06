@@ -32,9 +32,6 @@ const RecyclableProductDetail = ({ images = [] }) => {
         navigate(-1); // 브라우저 히스토리에서 뒤로가기
     };
 
-    // 이미지가 있는지 확인
-    const hasImages = images && images.length > 0;
-
     // 전화 걸기 기능
     const handleCall = () => {
         window.location.href = `tel:${product.contact}`;
@@ -257,17 +254,14 @@ const RecyclableProductDetail = ({ images = [] }) => {
                 </div>
 
                 {/* 이미지 갤러리 - 이미지가 있는 경우에만 렌더링 */}
-                {hasImages && (
                     <div style={styles.imageGallery}>
                         <div style={styles.mainImage}>
                             <img
-                                src={
-                                    images[currentImageIndex]?.url ||
-                                    "/api/placeholder/400/250"
-                                }
+                                src={images[currentImageIndex]?.url || product.image}
                                 alt={product.title}
                                 style={styles.mainImageImg}
                             />
+                            
                         </div>
                         {images.length > 1 && (
                             <div style={styles.thumbnails}>
@@ -297,7 +291,6 @@ const RecyclableProductDetail = ({ images = [] }) => {
                             </div>
                         )}
                     </div>
-                )}
 
                 {/* 제품 제목 및 상태 */}
                 <div style={styles.productHeader}>
