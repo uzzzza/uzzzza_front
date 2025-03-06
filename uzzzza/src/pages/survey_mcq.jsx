@@ -6,7 +6,7 @@ const SurveyMultipleChoice = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const [questions, setQuestions] = useState([]);
     const [loading, setLoading] = useState(true);
-    
+
     // Initialize answers state with empty values
     const [answers, setAnswers] = useState({
         environmentalPolicy: "",
@@ -16,14 +16,14 @@ const SurveyMultipleChoice = () => {
         supplyChain: "",
         carbonFootprint: "",
         wasteManagement: "",
-        sustainabilityReport: ""
+        sustainabilityReport: "",
     });
-    
+
     // Load questions from JSON file
     useEffect(() => {
         const fetchQuestions = async () => {
             try {
-                const response = await fetch('/data/surveys_mcq.json');
+                const response = await fetch("/data/surveys_mcq.json");
                 const data = await response.json();
                 setQuestions(data.questions);
                 setLoading(false);
@@ -32,7 +32,7 @@ const SurveyMultipleChoice = () => {
                 setLoading(false);
             }
         };
-        
+
         fetchQuestions();
     }, []);
 
@@ -43,7 +43,7 @@ const SurveyMultipleChoice = () => {
     const handleAnswerChange = (questionId, value) => {
         setAnswers({
             ...answers,
-            [questionId]: value
+            [questionId]: value,
         });
     };
 
@@ -68,7 +68,7 @@ const SurveyMultipleChoice = () => {
 
     // Check if current page is complete
     const isCurrentPageComplete = () => {
-        return currentQuestions.every(q => answers[q.id] !== "");
+        return currentQuestions.every((q) => answers[q.id] !== "");
     };
 
     // Styles from company.jsx
@@ -239,7 +239,7 @@ const SurveyMultipleChoice = () => {
             marginTop: "15px",
             color: "#555",
             fontSize: "16px",
-        }
+        },
     };
 
     if (loading) {
@@ -253,7 +253,9 @@ const SurveyMultipleChoice = () => {
                 </div>
                 <div style={styles.loadingContainer}>
                     <div>로딩 중...</div>
-                    <div style={styles.loadingText}>설문 질문을 불러오는 중입니다</div>
+                    <div style={styles.loadingText}>
+                        설문 질문을 불러오는 중입니다
+                    </div>
                 </div>
             </div>
         );
@@ -287,20 +289,32 @@ const SurveyMultipleChoice = () => {
                                         ...styles.optionButton,
                                         ...(answers[question.id] === option
                                             ? styles.selectedOption
-                                            : {}),
+                                            : {
+                                                  border: "1px solid #ddd",
+                                                  backgroundColor: "#fff",
+                                                  color: "#333",
+                                              }),
                                     }}
-                                    onClick={() => handleAnswerChange(question.id, option)}
+                                    onClick={() =>
+                                        handleAnswerChange(question.id, option)
+                                    }
                                 >
-                                    <div 
+                                    <div
                                         style={{
                                             ...styles.radioCircle,
                                             ...(answers[question.id] === option
                                                 ? styles.radioCircleSelected
-                                                : {}),
+                                                : {
+                                                      border: "1px solid #ddd",
+                                                      backgroundColor: "#fff",
+                                                      color: "#333",
+                                                  }),
                                         }}
                                     >
                                         {answers[question.id] === option && (
-                                            <div style={styles.radioInner}></div>
+                                            <div
+                                                style={styles.radioInner}
+                                            ></div>
                                         )}
                                     </div>
                                     {option}
@@ -331,12 +345,18 @@ const SurveyMultipleChoice = () => {
                     onClick={handleNextClick}
                     disabled={!isCurrentPageComplete()}
                 >
-                    {currentPage < questions.length - 1 ? "다음" : "서술형 문항으로"}
-                    <span style={{
-                        ...styles.buttonIcon,
-                        marginLeft: "8px",
-                        marginRight: 0
-                    }}>▶</span>
+                    {currentPage < questions.length - 1
+                        ? "다음"
+                        : "서술형 문항으로"}
+                    <span
+                        style={{
+                            ...styles.buttonIcon,
+                            marginLeft: "8px",
+                            marginRight: 0,
+                        }}
+                    >
+                        ▶
+                    </span>
                 </button>
             </div>
         </div>
