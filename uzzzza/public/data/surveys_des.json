@@ -1,0 +1,40 @@
+{
+    "questions": [
+        {
+            "id": "challenges",
+            "question": "귀사가 친환경 정책을 구현하는 데 있어 주요 어려움은 무엇입니까?",
+            "placeholder": "직면한 주요 도전 과제들을 설명해 주세요...",
+            "maxLength": 500
+        },
+        {
+            "id": "successStories",
+            "question": "환경 보호와 관련하여 귀사의 가장 큰 성공 사례는 무엇입니까?",
+            "placeholder": "성공적인 환경 이니셔티브나 프로젝트를 설명해 주세요...",
+            "maxLength": 500
+        },
+        {
+            "id": "futureGoals",
+            "question": "향후 3년간 귀사의 환경 관련 목표는 무엇입니까?",
+            "placeholder": "친환경 관련 주요 목표와 달성 방법을 설명해 주세요...",
+            "maxLength": 500
+        },
+        {
+            "id": "resources",
+            "question": "친환경 정책 구현을 위해 추가로 필요한 자원이나 지원은 무엇입니까?",
+            "placeholder": "필요한 자원, 기술, 지원 등을 설명해 주세요...",
+            "maxLength": 500
+        },
+        {
+            "id": "improvements",
+            "question": "귀사의 산업 분야에서 환경 문제를 해결하기 위한 혁신적인 아이디어가 있다면 무엇입니까?",
+            "placeholder": "혁신적인 아이디어나 접근 방식을 공유해 주세요...",
+            "maxLength": 500
+        },
+        {
+            "id": "feedback",
+            "question": "환경 정책과 관련하여 정부나 규제 기관에 제안하고 싶은 개선사항이 있으십니까?",
+            "placeholder": "규제, 인센티브, 지원 프로그램 등에 대한 의견을 작성해 주세요...",
+            "maxLength": 500
+        }
+    ]
+}
