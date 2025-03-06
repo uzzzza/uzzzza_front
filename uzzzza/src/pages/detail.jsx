@@ -19,10 +19,6 @@ const RecyclableProductDetail = ({ images = [] }) => {
             .catch((error) => console.error("Error fetching product:", error));
     }, [id]);
 
-    if (!product) {
-        return <p>상품을 찾을 수 없습니다.</p>;
-    }
-
     // 추가: 뒤로가기 핸들러
     const handleBackClick = () => {
         navigate(-1); // 브라우저 히스토리에서 뒤로가기
@@ -243,184 +239,194 @@ const RecyclableProductDetail = ({ images = [] }) => {
     };
 
     return (
-        <div style={styles.container}>
-            <div style={styles.formHeader}>
-                <button style={styles.backButton} onClick={handleBackClick}>
-                    ←
-                </button>
-                <h2 style={styles.headerTitle}>재활용품 상세</h2>
-            </div>
+        product && (
+            <div style={styles.container}>
+                <div style={styles.formHeader}>
+                    <button style={styles.backButton} onClick={handleBackClick}>
+                        ←
+                    </button>
+                    <h2 style={styles.headerTitle}>재활용품 상세</h2>
+                </div>
 
-            {/* 이미지 갤러리 - 이미지가 있는 경우에만 렌더링 */}
-            {hasImages && (
-                <div style={styles.imageGallery}>
-                    <div style={styles.mainImage}>
-                        <img
-                            src={
-                                images[currentImageIndex]?.url ||
-                                "/api/placeholder/400/250"
-                            }
-                            alt={product.title}
-                            style={styles.mainImageImg}
-                        />
-                    </div>
-                    {images.length > 1 && (
-                        <div style={styles.thumbnails}>
-                            {images.map((image, index) => (
-                                <button
-                                    key={index}
-                                    style={{
-                                        ...styles.thumbnail,
-                                        ...(currentImageIndex === index
-                                            ? styles.activeThumbnail
-                                            : {}),
-                                    }}
-                                    onClick={() => setCurrentImageIndex(index)}
-                                >
-                                    <img
-                                        src={
-                                            image.url ||
-                                            "/api/placeholder/100/100"
-                                        }
-                                        alt={`썸네일 ${index + 1}`}
-                                        style={styles.thumbnailImg}
-                                    />
-                                </button>
-                            ))}
+                {/* 이미지 갤러리 - 이미지가 있는 경우에만 렌더링 */}
+                {hasImages && (
+                    <div style={styles.imageGallery}>
+                        <div style={styles.mainImage}>
+                            <img
+                                src={
+                                    images[currentImageIndex]?.url ||
+                                    "/api/placeholder/400/250"
+                                }
+                                alt={product.title}
+                                style={styles.mainImageImg}
+                            />
                         </div>
-                    )}
+                        {images.length > 1 && (
+                            <div style={styles.thumbnails}>
+                                {images.map((image, index) => (
+                                    <button
+                                        key={index}
+                                        style={{
+                                            ...styles.thumbnail,
+                                            ...(currentImageIndex === index
+                                                ? styles.activeThumbnail
+                                                : {}),
+                                        }}
+                                        onClick={() =>
+                                            setCurrentImageIndex(index)
+                                        }
+                                    >
+                                        <img
+                                            src={
+                                                image.url ||
+                                                "/api/placeholder/100/100"
+                                            }
+                                            alt={`썸네일 ${index + 1}`}
+                                            style={styles.thumbnailImg}
+                                        />
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {/* 제품 제목 및 상태 */}
+                <div style={styles.productHeader}>
+                    <h1 style={styles.productTitle}>{product.title}</h1>
                 </div>
-            )}
 
-            {/* 제품 제목 및 상태 */}
-            <div style={styles.productHeader}>
-                <h1 style={styles.productTitle}>{product.title}</h1>
-            </div>
-
-            {/* 기본 정보 */}
-            <div style={styles.detailSection}>
-                <h3 style={styles.sectionTitle}>
-                    <span style={styles.sectionIcon}>📋</span>
-                    기본 정보
-                </h3>
-                <div style={styles.detailGrid}>
-                    <div style={styles.detailItem}>
-                        <span style={styles.detailLabel}>카테고리</span>
-                        <span style={styles.detailValue}>
-                            {product.category}
-                        </span>
-                    </div>
-                    <div style={styles.detailItem}>
-                        <span style={styles.detailLabel}>물품 등급</span>
-                        <span style={styles.detailValue}>
-                            {product.condition}
-                        </span>
-                    </div>
-                    <div style={styles.detailItem}>
-                        <span style={styles.detailLabel}>수량</span>
-                        <span style={styles.detailValue}>
-                            {product.quantity}
-                        </span>
-                    </div>
-                    <div style={styles.detailItem}>
-                        <span style={styles.detailLabel}>등록일</span>
-                        <span style={styles.detailValue}>{product.date}</span>
-                    </div>
-                </div>
-            </div>
-
-            {/* 제품 설명 */}
-            <div style={styles.detailSection}>
-                <h3 style={styles.sectionTitle}>
-                    <span style={styles.sectionIcon}>📝</span>
-                    제품 설명
-                </h3>
-                <p style={styles.productDescription}>{product.description}</p>
-            </div>
-
-            {/* 기관/담당자 정보 */}
-            <div style={styles.detailSection}>
-                <h3 style={styles.sectionTitle}>
-                    <span style={styles.sectionIcon}>🏢</span>
-                    기관 / 담당자 정보
-                </h3>
-                <div style={styles.detailGrid}>
-                    <div style={styles.detailItem}>
-                        <span style={styles.detailLabel}>기관명</span>
-                        <span style={styles.detailValue}>
-                            {product.company}
-                        </span>
-                    </div>
-                    <div style={styles.detailItem}>
-                        <span style={styles.detailLabel}>담당자</span>
-                        <span style={styles.detailValue}>
-                            {product.manager}
-                        </span>
-                    </div>
-                    <div style={styles.detailItem}>
-                        <span style={styles.detailLabel}>연락처</span>
-                        <span style={styles.detailValue}>
-                            {product.contact}
-                        </span>
-                    </div>
-                    <div style={styles.detailItem}>
-                        <span style={styles.detailLabel}>주소</span>
-                        <span style={styles.detailValue}>
-                            {product.address}
-                        </span>
+                {/* 기본 정보 */}
+                <div style={styles.detailSection}>
+                    <h3 style={styles.sectionTitle}>
+                        <span style={styles.sectionIcon}>📋</span>
+                        기본 정보
+                    </h3>
+                    <div style={styles.detailGrid}>
+                        <div style={styles.detailItem}>
+                            <span style={styles.detailLabel}>카테고리</span>
+                            <span style={styles.detailValue}>
+                                {product.category}
+                            </span>
+                        </div>
+                        <div style={styles.detailItem}>
+                            <span style={styles.detailLabel}>물품 등급</span>
+                            <span style={styles.detailValue}>
+                                {product.condition}
+                            </span>
+                        </div>
+                        <div style={styles.detailItem}>
+                            <span style={styles.detailLabel}>수량</span>
+                            <span style={styles.detailValue}>
+                                {product.quantity}
+                            </span>
+                        </div>
+                        <div style={styles.detailItem}>
+                            <span style={styles.detailLabel}>등록일</span>
+                            <span style={styles.detailValue}>
+                                {product.date}
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            {/* 수거 정보 */}
-            <div style={styles.detailSection}>
-                <h3 style={styles.sectionTitle}>
-                    <span style={styles.sectionIcon}>🚚</span>
-                    수거 정보
-                </h3>
-                <div style={styles.detailGrid}>
-                    <div style={styles.detailItem}>
-                        <span style={styles.detailLabel}>희망 수령 기간</span>
-                        <span style={styles.detailValue}>
-                            {product.pickupPeriod.startDate} ~<br />{" "}
-                            {product.pickupPeriod.endDate}
-                        </span>
-                    </div>
-                    <div style={styles.detailItem}>
-                        <span style={styles.detailLabel}>세척 여부</span>
-                        <span style={styles.detailValue}>
-                            {product.cleaningStatus}
-                        </span>
-                    </div>
-                    <div style={styles.detailItem}>
-                        <span style={styles.detailLabel}>포장재 포함</span>
-                        <span style={styles.detailValue}>
-                            {product.includePackaging}
-                        </span>
-                    </div>
-                    <div style={styles.detailItem}>
-                        <span style={styles.detailLabel}>방문 수령</span>
-                        <span style={styles.detailValue}>
-                            {product.visitPickup}
-                        </span>
-                    </div>
-                    <div style={styles.detailItem}>
-                        <span style={styles.detailLabel}>택배/배송</span>
-                        <span style={styles.detailValue}>
-                            {product.delivery}
-                        </span>
+                {/* 제품 설명 */}
+                <div style={styles.detailSection}>
+                    <h3 style={styles.sectionTitle}>
+                        <span style={styles.sectionIcon}>📝</span>
+                        제품 설명
+                    </h3>
+                    <p style={styles.productDescription}>
+                        {product.description}
+                    </p>
+                </div>
+
+                {/* 기관/담당자 정보 */}
+                <div style={styles.detailSection}>
+                    <h3 style={styles.sectionTitle}>
+                        <span style={styles.sectionIcon}>🏢</span>
+                        기관 / 담당자 정보
+                    </h3>
+                    <div style={styles.detailGrid}>
+                        <div style={styles.detailItem}>
+                            <span style={styles.detailLabel}>기관명</span>
+                            <span style={styles.detailValue}>
+                                {product.company}
+                            </span>
+                        </div>
+                        <div style={styles.detailItem}>
+                            <span style={styles.detailLabel}>담당자</span>
+                            <span style={styles.detailValue}>
+                                {product.manager}
+                            </span>
+                        </div>
+                        <div style={styles.detailItem}>
+                            <span style={styles.detailLabel}>연락처</span>
+                            <span style={styles.detailValue}>
+                                {product.contact}
+                            </span>
+                        </div>
+                        <div style={styles.detailItem}>
+                            <span style={styles.detailLabel}>주소</span>
+                            <span style={styles.detailValue}>
+                                {product.address}
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            {/* 전화 연결 버튼 */}
-            <div style={styles.callButtonContainer}>
-                <button style={styles.callButton} onClick={handleCall}>
-                    <span style={styles.callIcon}>📞</span>
-                    <span>전화 연결하기</span>
-                </button>
+                {/* 수거 정보 */}
+                <div style={styles.detailSection}>
+                    <h3 style={styles.sectionTitle}>
+                        <span style={styles.sectionIcon}>🚚</span>
+                        수거 정보
+                    </h3>
+                    <div style={styles.detailGrid}>
+                        <div style={styles.detailItem}>
+                            <span style={styles.detailLabel}>
+                                희망 수령 기간
+                            </span>
+                            <span style={styles.detailValue}>
+                                {product.pickupPeriod.startDate} ~<br />{" "}
+                                {product.pickupPeriod.endDate}
+                            </span>
+                        </div>
+                        <div style={styles.detailItem}>
+                            <span style={styles.detailLabel}>세척 여부</span>
+                            <span style={styles.detailValue}>
+                                {product.cleaningStatus}
+                            </span>
+                        </div>
+                        <div style={styles.detailItem}>
+                            <span style={styles.detailLabel}>포장재 포함</span>
+                            <span style={styles.detailValue}>
+                                {product.includePackaging}
+                            </span>
+                        </div>
+                        <div style={styles.detailItem}>
+                            <span style={styles.detailLabel}>방문 수령</span>
+                            <span style={styles.detailValue}>
+                                {product.visitPickup}
+                            </span>
+                        </div>
+                        <div style={styles.detailItem}>
+                            <span style={styles.detailLabel}>택배/배송</span>
+                            <span style={styles.detailValue}>
+                                {product.delivery}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* 전화 연결 버튼 */}
+                <div style={styles.callButtonContainer}>
+                    <button style={styles.callButton} onClick={handleCall}>
+                        <span style={styles.callIcon}>📞</span>
+                        <span>전화 연결하기</span>
+                    </button>
+                </div>
             </div>
-        </div>
+        )
     );
 };
 
