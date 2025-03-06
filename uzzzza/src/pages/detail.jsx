@@ -398,7 +398,9 @@ const RecyclableProductDetail = ({ images = [] }) => {
                             </span>
                         </div>
                         <div style={styles.detailItem}>
-                            <span style={styles.detailLabel}>포장재 포함</span>
+                            <span style={styles.detailLabel}>
+                                혼합 재질 포함
+                            </span>
                             <span style={styles.detailValue}>
                                 {product.includePackaging}
                             </span>
