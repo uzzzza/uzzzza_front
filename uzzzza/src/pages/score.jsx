@@ -9,8 +9,8 @@ const EcoScoreGauge = ({ onBackClick }) => {
     const companyName = "기업 이름";
     const score = 70;
     const maxScore = 100;
-    const greenhouseGasReduction = "70 ym~";
-    const fossilFuelReduction = "80 kg";
+    const greenhouseGasReduction = "목표 설정의 모순 및 비일관성";
+    const fossilFuelReduction = "환경경영 목표 재설정 온실가스 감축 목표의 현실적이고 도전적인 재설정 (0%→최소 30%) 폐기물 재활용률 목표 현실화 (0%→최소 50%) 일관성 있는 단계별 목표 수립";
 
     // Calculate the angle for the gauge meter based on the score
     const calculateGaugeRotation = () => {
@@ -324,7 +324,7 @@ const EcoScoreGauge = ({ onBackClick }) => {
             <div style={styles.detailSection}>
                 <h3 style={styles.sectionTitle}>
                     <span style={styles.sectionIcon}>🌿</span>
-                    온실가스 배출 감소량
+                    주요 문제점
                 </h3>
                 <div style={styles.detailItem}>
                     <span style={styles.detailValue}>
@@ -337,7 +337,7 @@ const EcoScoreGauge = ({ onBackClick }) => {
             <div style={styles.detailSection}>
                 <h3 style={styles.sectionTitle}>
                     <span style={styles.sectionIcon}>⚡</span>
-                    화석연료 소비 감소량
+                    개선 필요 핵심 영역
                 </h3>
                 <div style={styles.detailItem}>
                     <span style={styles.detailValue}>

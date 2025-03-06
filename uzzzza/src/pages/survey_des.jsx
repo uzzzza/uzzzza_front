@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const SurveyDescriptive = () => {
@@ -6,6 +6,8 @@ const SurveyDescriptive = () => {
     const location = useLocation();
     const multipleChoiceAnswers = location.state?.answers || {};
     const [currentPage, setCurrentPage] = useState(0);
+    const [questions, setQuestions] = useState([]);
+    const [loading, setLoading] = useState(true);
     
     // Descriptive answers state
     const [answers, setAnswers] = useState({
@@ -16,58 +18,33 @@ const SurveyDescriptive = () => {
         improvements: "",
         feedback: ""
     });
-    
-    // Questions divided into pages (2 questions per page)
-    const questions = [
-        // Page 1
-        [
-            {
-                id: "challenges",
-                question: "귀사가 친환경 정책을 구현하는 데 있어 주요 어려움은 무엇입니까?",
-                placeholder: "직면한 주요 도전 과제들을 설명해 주세요...",
-                maxLength: 500
-            },
-            {
-                id: "successStories",
-                question: "환경 보호와 관련하여 귀사의 가장 큰 성공 사례는 무엇입니까?",
-                placeholder: "성공적인 환경 이니셔티브나 프로젝트를 설명해 주세요...",
-                maxLength: 500
-            }
-        ],
-        // Page 2
-        [
-            {
-                id: "futureGoals",
-                question: "향후 3년간 귀사의 환경 관련 목표는 무엇입니까?",
-                placeholder: "친환경 관련 주요 목표와 달성 방법을 설명해 주세요...",
-                maxLength: 500
-            },
-            {
-                id: "resources",
-                question: "친환경 정책 구현을 위해 추가로 필요한 자원이나 지원은 무엇입니까?",
-                placeholder: "필요한 자원, 기술, 지원 등을 설명해 주세요...",
-                maxLength: 500
-            }
-        ],
-        // Page 3
-        [
-            {
-                id: "improvements",
-                question: "귀사의 산업 분야에서 환경 문제를 해결하기 위한 혁신적인 아이디어가 있다면 무엇입니까?",
-                placeholder: "혁신적인 아이디어나 접근 방식을 공유해 주세요...",
-                maxLength: 500
-            },
-            {
-                id: "feedback",
-                question: "환경 정책과 관련하여 정부나 규제 기관에 제안하고 싶은 개선사항이 있으십니까?",
-                placeholder: "규제, 인센티브, 지원 프로그램 등에 대한 의견을 작성해 주세요...",
-                maxLength: 500
-            }
-        ]
-    ];
 
+    // Load questions from JSON file
+    useEffect(() => {
+        const fetchQuestions = async () => {
+            try {
+                const response = await fetch('/data/surveys_des.json');
+                const data = await response.json();
+                
+                // Divide questions into pages (2 questions per page)
+                const pagesOfQuestions = [];
+                for (let i = 0; i < data.questions.length; i += 2) {
+                    pagesOfQuestions.push(data.questions.slice(i, i + 2));
+                }
+                
+                setQuestions(pagesOfQuestions);
+                setLoading(false);
+            } catch (error) {
+                console.error("Error loading descriptive survey questions:", error);
+                setLoading(false);
+            }
+        };
+        
+        fetchQuestions();
+    }, []);
+    
     // Get current page questions
-    const currentQuestions = questions[currentPage];
+    const currentQuestions = questions[currentPage] || [];
 
     // Handle text input change
     const handleInputChange = (questionId, value) => {
@@ -112,7 +89,7 @@ const SurveyDescriptive = () => {
         return currentQuestions.every(q => answers[q.id].length > 0);
     };
 
-    // Styles from company.jsx
+    // Styles
     const styles = {
         container: {
             maxWidth: "480px",
@@ -248,7 +225,36 @@ const SurveyDescriptive = () => {
             marginRight: "8px",
             fontSize: "18px",
         },
+        loadingContainer: {
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "50vh",
+            flexDirection: "column",
+        },
+        loadingText: {
+            marginTop: "15px",
+            color: "#555",
+            fontSize: "16px",
+        }
     };
+
+    if (loading) {
+        return (
+            <div style={styles.container}>
+                <div style={styles.formHeader}>
+                    <button style={styles.backButton} onClick={handleBackClick}>
+                        ←
+                    </button>
+                    <h2 style={styles.headerTitle}>서술형 문항</h2>
+                </div>
+                <div style={styles.loadingContainer}>
+                    <div>로딩 중...</div>
+                    <div style={styles.loadingText}>서술형 문항을 불러오는 중입니다</div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div style={styles.container}>
