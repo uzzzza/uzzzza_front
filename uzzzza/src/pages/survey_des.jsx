@@ -101,6 +101,9 @@ const SurveyDescriptive = () => {
                 const result = await response.json();
                 console.log("응답 제출 성공:", result);
 
+                localStorage.setItem("environment_id", result.id);
+                console.log(localStorage);
+
                 alert("설문이 완료되었습니다! 참여해 주셔서 감사합니다.");
                 navigate("/"); // Navigate to home or completion page
             } catch (error) {
