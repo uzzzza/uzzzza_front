@@ -40,8 +40,6 @@ const EcoScoreGauge = ({ onBackClick }) => {
 
     const handleBackClick = () => {
         if (onBackClick) {
-            onBackClick();
-        } else {
             navigate("/");
         }
     };
@@ -51,9 +49,9 @@ const EcoScoreGauge = ({ onBackClick }) => {
     };
 
     // product가 로드되기 전까지는 로딩 메시지 표시
-    if (!product) {
-        return <div>Loading...</div>;
-    }
+    // if (!product) {
+    //     return <div>Loading...</div>;
+    // }
 
     const styles = {
         container: {
@@ -252,6 +250,7 @@ const EcoScoreGauge = ({ onBackClick }) => {
     };
 
     return (
+      product && (
         <div style={styles.container}>
             {/* Header with back button */}
             <div style={styles.formHeader}>
@@ -311,6 +310,7 @@ const EcoScoreGauge = ({ onBackClick }) => {
                 </button>
             </div>
         </div>
+      )
     );
 };
 

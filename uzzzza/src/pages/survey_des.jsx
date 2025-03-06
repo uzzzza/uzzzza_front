@@ -347,12 +347,12 @@ const SurveyDescriptive = () => {
                     <button style={styles.backButton} onClick={handleBackClick}>
                         ←
                     </button>
-                    <h2 style={styles.headerTitle}>서술형 문항</h2>
+                    <h2 style={styles.headerTitle}>ESG 중대성 평가</h2>
                 </div>
                 <div style={styles.loadingContainer}>
                     <div>로딩 중...</div>
                     <div style={styles.loadingText}>
-                        서술형 문항을 불러오는 중입니다
+                    ESG 중대성 평가를 불러오는 중입니다
                     </div>
                 </div>
             </div>
@@ -366,7 +366,7 @@ const SurveyDescriptive = () => {
                 <button style={styles.backButton} onClick={handleBackClick}>
                     ←
                 </button>
-                <h2 style={styles.headerTitle}>서술형 문항</h2>
+                <h2 style={styles.headerTitle}>ESG 중대성 평가</h2>
                 <span style={styles.pageIndicator}>
                     {currentPage + 1}/{questions.length}
                 </span>

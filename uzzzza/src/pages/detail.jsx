@@ -29,7 +29,7 @@ const RecyclableProductDetail = ({ images = [] }) => {
 
     // 추가: 뒤로가기 핸들러
     const handleBackClick = () => {
-        navigate(-1); // 브라우저 히스토리에서 뒤로가기
+        navigate("/"); // 브라우저 히스토리에서 뒤로가기
     };
 
     // 전화 걸기 기능
