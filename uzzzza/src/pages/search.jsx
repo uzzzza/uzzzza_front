@@ -5,7 +5,7 @@ const RecyclableProductsList = () => {
     const navigate = useNavigate();
     const [searchKeyword, setSearchKeyword] = useState("");
     const [selectedFilter, setSelectedFilter] = useState("전체");
-    const [selectedCategory, setSelectedCategory] = useState("종이");
+    const [selectedCategory, setSelectedCategory] = useState("전체");
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
