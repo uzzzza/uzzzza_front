@@ -8,7 +8,7 @@ const SurveyDescriptive = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const [questions, setQuestions] = useState([]);
     const [loading, setLoading] = useState(true);
-    
+
     // Descriptive answers state
     const [answers, setAnswers] = useState({
         challenges: "",
@@ -16,33 +16,36 @@ const SurveyDescriptive = () => {
         futureGoals: "",
         resources: "",
         improvements: "",
-        feedback: ""
+        feedback: "",
     });
 
     // Load questions from JSON file
     useEffect(() => {
         const fetchQuestions = async () => {
             try {
-                const response = await fetch('/data/surveys_des.json');
+                const response = await fetch("/data/surveys_des.json");
                 const data = await response.json();
-                
+
                 // Divide questions into pages (2 questions per page)
                 const pagesOfQuestions = [];
                 for (let i = 0; i < data.questions.length; i += 2) {
                     pagesOfQuestions.push(data.questions.slice(i, i + 2));
                 }
-                
+
                 setQuestions(pagesOfQuestions);
                 setLoading(false);
             } catch (error) {
-                console.error("Error loading descriptive survey questions:", error);
+                console.error(
+                    "Error loading descriptive survey questions:",
+                    error
+                );
                 setLoading(false);
             }
         };
-        
+
         fetchQuestions();
     }, []);
-    
+
     // Get current page questions
     const currentQuestions = questions[currentPage] || [];
 
@@ -50,7 +53,7 @@ const SurveyDescriptive = () => {
     const handleInputChange = (questionId, value) => {
         setAnswers({
             ...answers,
-            [questionId]: value
+            [questionId]: value,
         });
     };
 
@@ -70,14 +73,14 @@ const SurveyDescriptive = () => {
             setCurrentPage(currentPage + 1);
         } else {
             // Combine all answers and submit
-            const allAnswers = {
-                ...multipleChoiceAnswers,
-                ...answers
-            };
-            
+            // const allAnswers = {
+            //     ...multipleChoiceAnswers,
+            //     ...answers,
+            // };
+
             // Here you would typically submit the answers to your backend
-            console.log("Survey completed:", allAnswers);
-            
+            console.log("Survey completed:", answers);
+
             // Navigate to completion page or back to home
             alert("설문이 완료되었습니다! 참여해 주셔서 감사합니다.");
             navigate("/"); // Navigate to home or completion page
@@ -86,7 +89,7 @@ const SurveyDescriptive = () => {
 
     // Check if current page inputs have been touched
     const isCurrentPageComplete = () => {
-        return currentQuestions.every(q => answers[q.id].length > 0);
+        return currentQuestions.every((q) => answers[q.id].length > 0);
     };
 
     // Styles
@@ -236,7 +239,7 @@ const SurveyDescriptive = () => {
             marginTop: "15px",
             color: "#555",
             fontSize: "16px",
-        }
+        },
     };
 
     if (loading) {
@@ -250,7 +253,9 @@ const SurveyDescriptive = () => {
                 </div>
                 <div style={styles.loadingContainer}>
                     <div>로딩 중...</div>
-                    <div style={styles.loadingText}>서술형 문항을 불러오는 중입니다</div>
+                    <div style={styles.loadingText}>
+                        서술형 문항을 불러오는 중입니다
+                    </div>
                 </div>
             </div>
         );
@@ -280,11 +285,17 @@ const SurveyDescriptive = () => {
                                 style={styles.textarea}
                                 placeholder={question.placeholder}
                                 value={answers[question.id]}
-                                onChange={(e) => handleInputChange(question.id, e.target.value)}
+                                onChange={(e) =>
+                                    handleInputChange(
+                                        question.id,
+                                        e.target.value
+                                    )
+                                }
                                 maxLength={question.maxLength}
                             />
                             <span style={styles.counter}>
-                                {answers[question.id].length}/{question.maxLength}자
+                                {answers[question.id].length}/
+                                {question.maxLength}자
                             </span>
                         </div>
                     </div>
@@ -310,11 +321,15 @@ const SurveyDescriptive = () => {
                     onClick={handleNextClick}
                 >
                     {currentPage < questions.length - 1 ? "다음" : "제출하기"}
-                    <span style={{
-                        ...styles.buttonIcon,
-                        marginLeft: "8px",
-                        marginRight: 0
-                    }}>▶</span>
+                    <span
+                        style={{
+                            ...styles.buttonIcon,
+                            marginLeft: "8px",
+                            marginRight: 0,
+                        }}
+                    >
+                        ▶
+                    </span>
                 </button>
             </div>
         </div>

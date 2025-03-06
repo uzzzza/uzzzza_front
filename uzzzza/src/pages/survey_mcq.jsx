@@ -6,17 +6,15 @@ const SurveyMultipleChoice = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const [questions, setQuestions] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [mcqScore, setMcqScore] = useState(0);
 
     // Initialize answers state with empty values
     const [answers, setAnswers] = useState({
-        environmentalPolicy: "",
-        wasteReduction: "",
-        renewableEnergy: "",
-        employeeTraining: "",
-        supplyChain: "",
-        carbonFootprint: "",
-        wasteManagement: "",
-        sustainabilityReport: "",
+        environmentalManagementGoals: "",
+        environmentalManagementSystem: "",
+        energyUsage: "",
+        waterUsage: "",
+        environmentalLawCompliance: "",
     });
 
     // Load questions from JSON file
@@ -40,11 +38,12 @@ const SurveyMultipleChoice = () => {
     const currentQuestions = questions[currentPage] || [];
 
     // Handle answer change
-    const handleAnswerChange = (questionId, value) => {
+    const handleAnswerChange = (questionId, index) => {
         setAnswers({
             ...answers,
-            [questionId]: value,
+            [questionId]: index,
         });
+        setMcqScore(mcqScore + index * 5);
     };
 
     // Navigate to previous page or back to home
@@ -62,7 +61,8 @@ const SurveyMultipleChoice = () => {
             setCurrentPage(currentPage + 1);
         } else {
             // Navigate to descriptive questions page
-            navigate("/descriptive", { state: { answers } });
+            console.log(mcqScore);
+            navigate("/descriptive", { state: { mcqScore } });
         }
     };
 
@@ -281,13 +281,13 @@ const SurveyMultipleChoice = () => {
                             {question.question}
                         </h3>
                         <div style={styles.optionsContainer}>
-                            {question.options.map((option) => (
+                            {question.options.map((option, index) => (
                                 <button
-                                    key={option}
+                                    key={index}
                                     type="button"
                                     style={{
                                         ...styles.optionButton,
-                                        ...(answers[question.id] === option
+                                        ...(answers[question.id] === index
                                             ? styles.selectedOption
                                             : {
                                                   border: "1px solid #ddd",
@@ -296,13 +296,13 @@ const SurveyMultipleChoice = () => {
                                               }),
                                     }}
                                     onClick={() =>
-                                        handleAnswerChange(question.id, option)
+                                        handleAnswerChange(question.id, index)
                                     }
                                 >
                                     <div
                                         style={{
                                             ...styles.radioCircle,
-                                            ...(answers[question.id] === option
+                                            ...(answers[question.id] === index
                                                 ? styles.radioCircleSelected
                                                 : {
                                                       border: "1px solid #ddd",
@@ -311,7 +311,7 @@ const SurveyMultipleChoice = () => {
                                                   }),
                                         }}
                                     >
-                                        {answers[question.id] === option && (
+                                        {answers[question.id] === index && (
                                             <div
                                                 style={styles.radioInner}
                                             ></div>
