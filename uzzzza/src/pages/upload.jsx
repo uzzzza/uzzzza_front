@@ -644,7 +644,7 @@ const ProductUploadForm = () => {
                 <div style={styles.formGroup}>
                     <label style={styles.label}>
                         <span style={styles.sectionIcon}>📝</span>
-                        배출 사유
+                        제품 설명
                     </label>
                     <div style={styles.inputCounter}>
                         <textarea

@@ -371,7 +371,7 @@ const RecyclableProductsList = () => {
             <div style={styles.filterContainer}>
                 <div style={styles.sectionHeader} onClick={toggleFilterSection}>
                     <div>
-                        <span style={styles.sectionIcon}>🔍</span>
+                        <span style={styles.sectionIcon}>📚</span>
                         카테고리
                     </div>
                     <span
