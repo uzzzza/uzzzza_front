@@ -20,7 +20,7 @@ const RecyclableProductsList = () => {
       }, []);
     
     const company = "친환경주식회사";
-
+ 
     const handleProductClick = (productId) => {
         navigate(`/product/${productId}`);
     };
@@ -545,10 +545,10 @@ const RecyclableProductsList = () => {
                                     </div>
                                     <div style={styles.detailItem}>
                                         <span style={styles.detailLabel}>
-                                            수량:
+                                            무게(KG):
                                         </span>
                                         <span style={styles.detailValue}>
-                                            {product.quantity}
+                                            {product.weight}
                                         </span>
                                     </div>
                                 </div>

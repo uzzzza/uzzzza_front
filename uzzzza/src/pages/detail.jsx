@@ -324,7 +324,7 @@ const RecyclableProductDetail = ({ images = [] }) => {
                             </span>
                         </div>
                         <div style={styles.detailItem}>
-                            <span style={styles.detailLabel}>수량</span>
+                            <span style={styles.detailLabel}>무게(KG)</span>
                             <span style={styles.detailValue}>
                                 {product.weight}
                             </span>
