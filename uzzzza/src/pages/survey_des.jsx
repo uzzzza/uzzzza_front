@@ -8,6 +8,39 @@ const SurveyDescriptive = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const [questions, setQuestions] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [submitting, setSubmitting] = useState(false);
+
+    // ✅ CSS 애니메이션 추가
+    const globalStyles = `
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        `;
+
+    // ✅ 스타일을 문서에 추가하는 함수
+    const addGlobalStyle = () => {
+        const styleTag = document.createElement("style");
+        styleTag.innerHTML = globalStyles;
+        document.head.appendChild(styleTag);
+    };
+
+    // ✅ 애니메이션 스타일을 한 번만 추가
+    addGlobalStyle();
+
+    const Modal = ({ show }) => {
+        if (!show) return null;
+
+        return (
+            <div style={styles.modalOverlay}>
+                <div style={styles.modalContent}>
+                    <div style={styles.spinner}></div>
+
+                    <p style={styles.loadingText}>🍃 응답을 전송 중입니다...</p>
+                </div>
+            </div>
+        );
+    };
 
     // Descriptive answers state
     const [answers, setAnswers] = useState({
@@ -83,6 +116,7 @@ const SurveyDescriptive = () => {
             console.log("Survey completed:", answers);
 
             try {
+                setSubmitting(true);
                 const response = await fetch(
                     "https://vvuoi7fvm6yb6fp2nxwx4rk53y0bmxef.lambda-url.us-east-1.on.aws/",
                     {
@@ -109,6 +143,8 @@ const SurveyDescriptive = () => {
             } catch (error) {
                 console.error("응답 제출 실패:", error);
                 alert("응답 제출 중 오류가 발생했습니다.");
+            } finally {
+                setSubmitting(false);
             }
         }
     };
@@ -261,10 +297,46 @@ const SurveyDescriptive = () => {
             height: "50vh",
             flexDirection: "column",
         },
+        modalOverlay: {
+            position: "fixed",
+            top: 0,
+            zIndex: 99,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0,0,0,0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+        },
+
+        modalContent: {
+            backgroundColor: "white",
+            padding: "20px",
+            borderRadius: "12px",
+            textAlign: "center",
+            boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
+            display: "flex",
+            flexDirection: "column", // ✅ 세로 정렬 추가
+            alignItems: "center",
+            justifyContent: "center",
+            width: "200px", // ✅ 가로 크기 지정
+        },
+
+        spinner: {
+            width: "40px",
+            height: "40px",
+            border: "4px solid #ccc",
+            borderTop: "4px solid #4cd686",
+            borderRadius: "50%",
+            animation: "spin 1s linear infinite",
+            marginBottom: "10px", // ✅ 텍스트와 간격 추가
+        },
+
         loadingText: {
-            marginTop: "15px",
-            color: "#555",
             fontSize: "16px",
+            color: "#555",
+            marginTop: "5px",
         },
     };
 
@@ -289,6 +361,7 @@ const SurveyDescriptive = () => {
 
     return (
         <div style={styles.container}>
+            <Modal show={submitting} />
             <div style={styles.formHeader}>
                 <button style={styles.backButton} onClick={handleBackClick}>
                     ←

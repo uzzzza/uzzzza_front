@@ -277,7 +277,7 @@ const EcoScoreGauge = ({ onBackClick }) => {
                     </div>
                 </div>
                 <div style={styles.minMaxValues}>
-                    <span>1</span>
+                    <span>0</span>
                     <span>100</span>
                 </div>
             </div>
