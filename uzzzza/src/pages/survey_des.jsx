@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 const SurveyDescriptive = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const multipleChoiceAnswers = location.state?.answers || {};
+    const mcqScore = location.state?.mcqScore || {};
     const [currentPage, setCurrentPage] = useState(0);
     const [questions, setQuestions] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -17,6 +17,7 @@ const SurveyDescriptive = () => {
         resources: "",
         improvements: "",
         feedback: "",
+        mcqScore: mcqScore,
     });
 
     // Load questions from JSON file
@@ -68,7 +69,7 @@ const SurveyDescriptive = () => {
     };
 
     // Navigate to next page or submit all answers
-    const handleNextClick = () => {
+    const handleNextClick = async () => {
         if (currentPage < questions.length - 1) {
             setCurrentPage(currentPage + 1);
         } else {
@@ -81,9 +82,31 @@ const SurveyDescriptive = () => {
             // Here you would typically submit the answers to your backend
             console.log("Survey completed:", answers);
 
-            // Navigate to completion page or back to home
-            alert("설문이 완료되었습니다! 참여해 주셔서 감사합니다.");
-            navigate("/"); // Navigate to home or completion page
+            try {
+                const response = await fetch(
+                    "https://vvuoi7fvm6yb6fp2nxwx4rk53y0bmxef.lambda-url.us-east-1.on.aws/",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(answers),
+                    }
+                );
+
+                if (!response.ok) {
+                    throw new Error(`서버 응답 오류: ${response.status}`);
+                }
+
+                const result = await response.json();
+                console.log("응답 제출 성공:", result);
+
+                alert("설문이 완료되었습니다! 참여해 주셔서 감사합니다.");
+                navigate("/"); // Navigate to home or completion page
+            } catch (error) {
+                console.error("응답 제출 실패:", error);
+                alert("응답 제출 중 오류가 발생했습니다.");
+            }
         }
     };
 

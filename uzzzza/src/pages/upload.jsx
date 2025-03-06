@@ -20,7 +20,7 @@ const ProductUploadForm = () => {
     const handleBackClick = () => {
         navigate("/"); // 메인 페이지로 이동
     };
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         // 업로드 데이터 생성
@@ -54,8 +54,32 @@ const ProductUploadForm = () => {
             alert("모든 필수 항목을 입력해주세요.");
             return;
         } else {
-            // 저장 후 메인 페이지로 이동
-            console.log("업로드 데이터:", uploadData);
+            // api post 요청
+            try {
+                console.log(uploadData);
+                const response = await fetch(
+                    "https://4tk2vliwiwoy34yb3t25tdxtza0avyvb.lambda-url.ap-northeast-2.on.aws/",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(uploadData),
+                    }
+                );
+
+                if (!response.ok) {
+                    throw new Error(`서버 응답 오류: ${response.status}`);
+                }
+
+                const result = await response.json();
+                console.log("업로드 성공:", result);
+                alert("제품 등록이 완료되었습니다!");
+            } catch (error) {
+                console.error("업로드 실패:", error);
+                alert("제품 등록 중 오류가 발생했습니다.");
+            }
+
             navigate("/");
         }
     };
