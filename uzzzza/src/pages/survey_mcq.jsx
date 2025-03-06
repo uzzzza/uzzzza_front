@@ -249,12 +249,12 @@ const SurveyMultipleChoice = () => {
                     <button style={styles.backButton} onClick={handleBackClick}>
                         ←
                     </button>
-                    <h2 style={styles.headerTitle}>ESG 측정 진단</h2>
+                    <h2 style={styles.headerTitle}>ESG 수준 진단</h2>
                 </div>
                 <div style={styles.loadingContainer}>
                     <div>로딩 중...</div>
                     <div style={styles.loadingText}>
-                        ESG 측정 진단을 불러오는 중입니다
+                        ESG 수준 진단을 불러오는 중입니다
                     </div>
                 </div>
             </div>
@@ -267,7 +267,7 @@ const SurveyMultipleChoice = () => {
                 <button style={styles.backButton} onClick={handleBackClick}>
                     ←
                 </button>
-                <h2 style={styles.headerTitle}>ESG 측정 진단</h2>
+                <h2 style={styles.headerTitle}>ESG 수준 진단</h2>
                 <span style={styles.pageIndicator}>
                     {currentPage + 1}/{questions.length}
                 </span>
