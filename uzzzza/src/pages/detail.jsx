@@ -132,7 +132,6 @@ const RecyclableProductDetail = ({ images = [] }) => {
         },
         productTitle: {
             fontSize: "22px",
-            margin: "0 0 12px",
             fontWeight: 600,
             color: "#2c3e50",
         },
@@ -296,20 +295,6 @@ const RecyclableProductDetail = ({ images = [] }) => {
             {/* 제품 제목 및 상태 */}
             <div style={styles.productHeader}>
                 <h1 style={styles.productTitle}>{product.title}</h1>
-                <div style={styles.statusBadgeContainer}>
-                    <span
-                        style={{
-                            ...styles.statusBadge,
-                            ...(product.status === "수거대기"
-                                ? styles.waitingBadge
-                                : product.status === "진행중"
-                                ? styles.progressBadge
-                                : styles.completedBadge),
-                        }}
-                    >
-                        {product.status}
-                    </span>
-                </div>
             </div>
 
             {/* 기본 정보 */}

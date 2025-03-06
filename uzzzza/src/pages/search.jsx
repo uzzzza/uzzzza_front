@@ -114,10 +114,10 @@ const RecyclableProductsList = () => {
         sectionHeader: {
             fontSize: "17px",
             fontWeight: 600,
-            // margin: "0 0 12px",
             color: "#2c3e50",
             display: "flex",
             alignItems: "center",
+            margin: "8px 0px 6px 0px",
             justifyContent: "space-between",
             cursor: "pointer",
         },
@@ -270,7 +270,6 @@ const RecyclableProductsList = () => {
             color: "#7f8c8d",
             backgroundColor: "#fff",
             borderRadius: "16px",
-            margin: "16px",
             boxShadow: "0 4px 12px rgba(0, 0, 0, 0.08)",
         },
         floatingButtonContainer: {
@@ -341,7 +340,7 @@ const RecyclableProductsList = () => {
             color: "#7f8c8d",
             margin: "4px, 0px",
             overflow: "hidden",
-        }
+        },
     };
 
     return (
@@ -373,96 +372,25 @@ const RecyclableProductsList = () => {
                 <div style={styles.sectionHeader} onClick={toggleFilterSection}>
                     <div>
                         <span style={styles.sectionIcon}>🔍</span>
-                        필터
+                        카테고리
                     </div>
-                    <span 
+                    <span
                         style={{
-                            ...styles.toggleIcon, 
-                            ...(isFilterExpanded ? styles.rotatedIcon : {})
+                            ...styles.toggleIcon,
+                            ...(isFilterExpanded ? styles.rotatedIcon : {}),
                         }}
                     >
                         ▼
                     </span>
                 </div>
-                
-                {/* 상태 필터 (수거대기, 진행중 등) */}
-                <div 
-                    style={{
-                        ...styles.buttonGroup,
-                        ...(isFilterExpanded ? {} : styles.collapsedButtonGroup)
-                    }}
-                >
-                    <button
-                        type="button"
-                        style={{
-                            ...styles.button,
-                            ...(selectedFilter === "전체"
-                                ? styles.selectedButton
-                                : {
-                                      border: "1px solid #ddd",
-                                      backgroundColor: "#fff",
-                                      color: "#333",
-                                  }),
-                        }}
-                        onClick={() => setSelectedFilter("전체")}
-                    >
-                        전체
-                    </button>
-                    <button
-                        type="button"
-                        style={{
-                            ...styles.button,
-                            ...(selectedFilter === "수거대기"
-                                ? styles.selectedButton
-                                : {
-                                      border: "1px solid #ddd",
-                                      backgroundColor: "#fff",
-                                      color: "#333",
-                                  }),
-                        }}
-                        onClick={() => setSelectedFilter("수거대기")}
-                    >
-                        수거대기
-                    </button>
-                    <button
-                        type="button"
-                        style={{
-                            ...styles.button,
-                            ...(selectedFilter === "진행중"
-                                ? styles.selectedButton
-                                : {
-                                      border: "1px solid #ddd",
-                                      backgroundColor: "#fff",
-                                      color: "#333",
-                                  }),
-                        }}
-                        onClick={() => setSelectedFilter("진행중")}
-                    >
-                        진행중
-                    </button>
-                    <button
-                        type="button"
-                        style={{
-                            ...styles.button,
-                            ...(selectedFilter === "수거완료"
-                                ? styles.selectedButton
-                                : {
-                                      border: "1px solid #ddd",
-                                      backgroundColor: "#fff",
-                                      color: "#333",
-                                  }),
-                        }}
-                        onClick={() => setSelectedFilter("수거완료")}
-                    >
-                        수거완료
-                    </button>
-                </div>
-                
+
                 {/* 카테고리 필터 (플라스틱, 의류 등) */}
-                <div 
+                <div
                     style={{
                         ...styles.categoryButtonGroup,
-                        ...(isFilterExpanded ? {} : styles.collapsedButtonGroup)
+                        ...(isFilterExpanded
+                            ? {}
+                            : styles.collapsedButtonGroup),
                     }}
                 >
                     <button
@@ -617,20 +545,6 @@ const RecyclableProductsList = () => {
                                             {product.quantity}
                                         </span>
                                     </div>
-                                </div>
-                                <div style={styles.productStatus}>
-                                    <span
-                                        style={{
-                                            ...styles.statusBadge,
-                                            ...(product.status === "수거대기"
-                                                ? styles.waitingBadge
-                                                : product.status === "진행중"
-                                                ? styles.progressBadge
-                                                : styles.completedBadge),
-                                        }}
-                                    >
-                                        {product.status}
-                                    </span>
                                 </div>
                             </div>
                         </div>
