@@ -8,15 +8,23 @@ const RecyclableProductDetail = ({ images = [] }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     useEffect(() => {
-        fetch("/data/products.json") // JSON 파일 경로
-            .then((response) => response.json())
-            .then((data) => {
-                const foundProduct = data.find(
-                    (item) => item.id === parseInt(id, 10)
-                );
-                setProduct(foundProduct || null);
+        fetch(
+            `https://dcfpifdcyyqoqwgwjlgfaetw4a0oinlu.lambda-url.ap-northeast-2.on.aws/items/${id}`
+        )
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("네트워크 응답이 올바르지 않습니다.");
+                }
+                return response.json();
             })
-            .catch((error) => console.error("Error fetching product:", error));
+            .then((data) => {
+                console.log(data.item); // 전체 아이템 목록 출력
+                setProduct(data.item);
+                // setProduct(foundProduct || null);
+            })
+            .catch((error) =>
+                console.error("상품 데이터를 불러오는 중 오류 발생:", error)
+            );
     }, [id]);
 
     // 추가: 뒤로가기 핸들러
@@ -306,25 +314,25 @@ const RecyclableProductDetail = ({ images = [] }) => {
                         <div style={styles.detailItem}>
                             <span style={styles.detailLabel}>카테고리</span>
                             <span style={styles.detailValue}>
-                                {product.category}
+                                {product.selectedCategory}
                             </span>
                         </div>
                         <div style={styles.detailItem}>
                             <span style={styles.detailLabel}>물품 등급</span>
                             <span style={styles.detailValue}>
-                                {product.condition}
+                                {product.selectedCondition}
                             </span>
                         </div>
                         <div style={styles.detailItem}>
                             <span style={styles.detailLabel}>수량</span>
                             <span style={styles.detailValue}>
-                                {product.quantity}
+                                {product.weight}
                             </span>
                         </div>
                         <div style={styles.detailItem}>
                             <span style={styles.detailLabel}>등록일</span>
                             <span style={styles.detailValue}>
-                                {product.date}
+                                {product.startDate}
                             </span>
                         </div>
                     </div>
@@ -351,25 +359,23 @@ const RecyclableProductDetail = ({ images = [] }) => {
                         <div style={styles.detailItem}>
                             <span style={styles.detailLabel}>기관명</span>
                             <span style={styles.detailValue}>
-                                {product.company}
+                                {"친환경주식회사"}
                             </span>
                         </div>
                         <div style={styles.detailItem}>
                             <span style={styles.detailLabel}>담당자</span>
-                            <span style={styles.detailValue}>
-                                {product.manager}
-                            </span>
+                            <span style={styles.detailValue}>{"김환경"}</span>
                         </div>
                         <div style={styles.detailItem}>
                             <span style={styles.detailLabel}>연락처</span>
                             <span style={styles.detailValue}>
-                                {product.contact}
+                                {"010-5031-8728"}
                             </span>
                         </div>
                         <div style={styles.detailItem}>
                             <span style={styles.detailLabel}>주소</span>
                             <span style={styles.detailValue}>
-                                {product.address}
+                                {"서울시 강남구 에코로 123"}
                             </span>
                         </div>
                     </div>
@@ -387,8 +393,7 @@ const RecyclableProductDetail = ({ images = [] }) => {
                                 희망 수령 기간
                             </span>
                             <span style={styles.detailValue}>
-                                {product.pickupPeriod.startDate} ~<br />{" "}
-                                {product.pickupPeriod.endDate}
+                                {product.startDate} ~<br /> {product.endDate}
                             </span>
                         </div>
                         <div style={styles.detailItem}>
@@ -408,13 +413,13 @@ const RecyclableProductDetail = ({ images = [] }) => {
                         <div style={styles.detailItem}>
                             <span style={styles.detailLabel}>방문 수령</span>
                             <span style={styles.detailValue}>
-                                {product.visitPickup}
+                                {product.isVisitPickup ? "가능" : "불가능"}
                             </span>
                         </div>
                         <div style={styles.detailItem}>
                             <span style={styles.detailLabel}>택배/배송</span>
                             <span style={styles.detailValue}>
-                                {product.delivery}
+                                {product.isDeliveryPossible ? "가능" : "불가능"}
                             </span>
                         </div>
                     </div>

@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 const SurveyDescriptive = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const mcqScore = location.state?.mcqScore || {};
+    const mcqScores = location.state?.mcqScore || {};
     const [currentPage, setCurrentPage] = useState(0);
     const [questions, setQuestions] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -17,7 +17,7 @@ const SurveyDescriptive = () => {
         resources: "",
         improvements: "",
         feedback: "",
-        mcqScore: mcqScore,
+        mcqScores: mcqScores,
     });
 
     // Load questions from JSON file
