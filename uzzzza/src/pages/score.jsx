@@ -40,7 +40,7 @@ const EcoScoreGauge = ({ onBackClick }) => {
 
     // Handle update button click
     const handleUpdateClick = () => {
-        navigate("/company");
+        navigate("/mcq");
     };
 
     // Styles based on detail.jsx but adapted for this component

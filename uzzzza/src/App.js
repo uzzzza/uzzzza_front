@@ -4,6 +4,8 @@ import RecyclableProductDetail from './pages/detail.jsx';
 import RecyclableProductsList from './pages/search.jsx';
 import ProductUploadForm from './pages/upload.jsx';
 import EcoScoreGauge from './pages/score.jsx';
+import SurveyMultipleChoice from'./pages/survey_mcq.jsx';
+import SurveyDescriptive from './pages/survey_des.jsx';
 
 // 메인 App 컴포넌트
 function App() {
@@ -22,6 +24,8 @@ function App() {
           
           {/* 에코 스코어 페이지 (마이페이지) */}
           <Route path="/score" element={<EcoScoreGaugeWithNavigation />} />
+          <Route path="/mcq" element={<SurveyMultipleChoice />} />
+          <Route path="/descriptive" element={<SurveyDescriptive />} />
         </Routes>
       </div>
     </Router>
