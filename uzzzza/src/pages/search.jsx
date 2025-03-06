@@ -10,11 +10,16 @@ const RecyclableProductsList = () => {
     const [isFilterExpanded, setIsFilterExpanded] = useState(false);
 
     useEffect(() => {
-        fetch("/data/products.json") // JSON 파일 경로
-            .then((response) => response.json())
-            .then((data) => setProducts(data))
-            .catch((error) => console.error("Error fetching products:", error));
-    }, []);
+        fetch("https://4j7js6hq4r5ohq6szekclolxbe0fepyn.lambda-url.ap-northeast-2.on.aws/items")
+          .then((response) => response.json())
+          .then((data) => {
+            // data.items에 실제 상품 데이터가 들어있습니다.
+            setProducts(data.items);
+          })
+          .catch((error) => console.error("Error fetching items:", error));
+      }, []);
+    
+    const company = "친환경주식회사";
 
     const handleProductClick = (productId) => {
         navigate(`/product/${productId}`);
@@ -37,11 +42,12 @@ const RecyclableProductsList = () => {
     const filteredProducts = products.filter(
         (product) =>
             (selectedFilter === "전체" || product.status === selectedFilter) &&
-            (selectedCategory === "전체" ||
-                product.category === selectedCategory) &&
-            (product.title.includes(searchKeyword) ||
-                product.company.includes(searchKeyword) ||
-                product.category.includes(searchKeyword))
+            (selectedCategory === "전체" || product.category === selectedCategory) &&
+            (
+                product.title?.includes(searchKeyword) ||
+                product.company?.includes(searchKeyword) ||
+                product.category?.includes(searchKeyword)
+            )
     );
 
     // 스타일: detail.jsx와 동일한 스타일 적용
@@ -517,7 +523,7 @@ const RecyclableProductsList = () => {
                                     {product.title}
                                 </h3>
                                 <div style={styles.productMeta}>
-                                    <span>{product.company}</span>
+                                    <span>{company}</span>
                                     <span>{product.date}</span>
                                 </div>
                                 <div style={styles.productDetails}>
