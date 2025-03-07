@@ -102,8 +102,6 @@ const ProductUploadForm = () => {
     // Function to save item data after successful upload
     const saveItemData = async (imageUrl) => {
         try {
-            const cleaningStatusBool = cleaningStatus === "세척 완료";
-            const includePackagingBool = includePackaging === "포함";
             
             const itemData = {
                 action: "saveItemData",
@@ -113,8 +111,8 @@ const ProductUploadForm = () => {
                 weight,
                 startDate,
                 endDate,
-                cleaningStatus: cleaningStatusBool,
-                includePackaging: includePackagingBool,
+                cleaningStatus,
+                includePackaging,
                 description,
                 isVisitPickup,
                 isDeliveryPossible,
