@@ -9,7 +9,7 @@ const EcoScoreGauge = ({ onBackClick }) => {
     useEffect(() => {
         const id = localStorage.getItem("environment_id")
             ? localStorage.getItem("environment_id")
-            : 1;
+            : 4;
         fetch(
             `https://nf6pmxwscbliizl5j2ounfufz40wwndu.lambda-url.us-east-1.on.aws/?id=${id}`
         )

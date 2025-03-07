@@ -34,7 +34,7 @@ const RecyclableProductDetail = ({ images = [] }) => {
 
     // 전화 걸기 기능
     const handleCall = () => {
-        window.location.href = `tel:${product.contact}`;
+        window.location.href = `tel:${"010-5031-8728"}`;
     };
 
     // 스타일: 더 둥글고 친근한 느낌의 디자인 적용
